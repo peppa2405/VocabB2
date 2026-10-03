@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bảng từ vựng theo chủ đề</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Lora:wght@600;700&family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Bảng màu My Melody Aesthetic */
+  --surface: rgba(255, 255, 255, 0.85); 
+  --surface-2: rgba(255, 240, 245, 0.95); 
+  --ink: #4a4a4a; 
+  --muted: #8e8e8e; 
+  --line: rgba(255, 182, 193, 0.7); 
+  --focus: #ff8fb3; 
+  --focus-hover: #ff6b9a; 
+  
+  --syn: #7bc4c4; 
+  --ant: #ff9a9e; 
+  
+  --c-change: #8bbce6; --c-tech: #b4aee8; --c-pv: #f4a261; --c-col: #d4a5a5; --c-idiom: #e09fbe; --c-wf: #a3c4bc;
+
+  --font-body: "Quicksand", "Nunito", sans-serif;
+  --font-head: "Quicksand", "Nunito", sans-serif;
+}
+
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 130px); scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  /* Hình nền Ghibli (Ponyo) */
+  background: url('https://static0.moviewebimages.com/wordpress/wp-content/uploads/2023/02/ponyo-2008-1.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Lớp phủ filter hồng đào */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 240, 245, 0.15);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Widget Pinterest lơ lửng ở góc */
+.melody-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  transform: scale(0.65); 
+  transform-origin: bottom right;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(255, 143, 179, 0.4);
+  animation: floatWidget 4s ease-in-out infinite;
+}
+
+@keyframes floatWidget {
+  0%, 100% { transform: scale(0.65) translateY(0); }
+  50% { transform: scale(0.65) translateY(-12px); }
+}
+
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 12px;}
+
+header.top { 
+  max-width: 1360px; 
+  margin: 10px auto 0; 
+  padding: 12px 18px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  background: var(--surface);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px; 
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 16px rgba(74, 74, 74, 0.08); 
+}
+.header-copy { min-width: 0; }
+header.top h1 { 
+  font-family: var(--font-head); 
+  font-size: 1.4rem; 
+  font-weight: 800; 
+  line-height: 1.2; 
+  margin: 0; 
+  color: var(--focus-hover); 
+  text-shadow: none;
+}
+.legend { display: flex; flex-wrap: wrap; gap: 2px 14px; margin-top: 3px; font-size: .78rem; color: var(--muted); font-weight: 700; }
+.legend span b { color: var(--focus-hover); }
+
+.bar {
+  position: sticky; top: 10px; z-index: 10;
+  max-width: 1360px; margin: 10px auto 16px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-radius: 14px;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 5px 16px rgba(74, 74, 74, 0.07);
+}
+.bar-in { padding: 8px 14px; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 14px; align-items: center; }
+
+/* CSS Dropdown Menu */
+.dropdown-wrapper { 
+  position: relative; 
+  display: inline-block; 
+}
+.topics-btn { 
+  font: inherit; font-size: .95rem; font-weight: 800; 
+  padding: 8px 20px; 
+  border-radius: 20px; 
+  border: 2px solid rgba(255, 182, 193, 0.6); 
+  background: var(--focus); 
+  color: #fff; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  box-shadow: 0 4px 12px rgba(255, 143, 179, 0.3); 
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topics-btn:hover { background: var(--focus-hover); transform: translateY(-2px); }
+.topics-btn::after {
+  content: "▾";
+  font-size: 1rem;
+  opacity: 0.9;
+}
+.topics-dropdown {
+  display: none;
+  position: absolute;
+  top: 115%;
+  left: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  min-width: 260px;
+  border-radius: 18px;
+  border: 2px solid rgba(255, 182, 193, 0.6);
+  box-shadow: 0 10px 25px rgba(255, 182, 193, 0.25);
+  padding: 8px;
+  z-index: 100;
+  flex-direction: column;
+  gap: 6px;
+}
+.topics-dropdown.show { display: flex; }
+.topics-dropdown button {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.topics-dropdown button:hover { background: var(--surface-2); color: var(--focus-hover); transform: translateX(2px); }
+.topics-dropdown button[aria-pressed="true"] {
+  background: linear-gradient(135deg, rgba(255, 143, 179, 0.18), rgba(255, 240, 245, 1));
+  color: var(--focus-hover);
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1px rgba(255, 143, 179, 0.2);
+}
+
+.nav { min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-left: 10px; padding-left: 15px; border-left: 2px dashed var(--line); }
+.nav a { 
+  text-decoration: none; font-size: .9rem; font-weight: 700; 
+  padding: 6px 16px; border-radius: 999px; 
+  border: 2px solid transparent; color: var(--ink); 
+  background: rgba(255,240,245,0.8); 
+  transition: all 0.2s ease; 
+}
+.nav a:hover { border-color: var(--c); color: var(--c); background: #fff; transform: translateY(-1px); }
+
+main { max-width: 1360px; margin: 0 auto; padding: 0 0 60px; }
+section { margin-top: 50px; }
+section h2 { 
+  font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; 
+  margin: 0 0 8px; padding-left: 16px; 
+  border-left: 8px solid var(--c); 
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; 
+  text-shadow: 0 2px 4px rgba(255,255,255,0.8); 
+  border-radius: 4px;
+}
+section h2 small { font-family: var(--font-body); font-weight: 700; font-size: 1rem; color: var(--focus-hover); background: rgba(255,255,255,0.9); padding: 2px 10px; border-radius: 12px; border: 1px solid var(--line);}
+section .lede { 
+  margin: 0 0 20px 24px; color: var(--ink); font-weight: 600; font-size: 1.05rem; max-width: 80ch; 
+  background: rgba(255,255,255,0.7); padding: 8px 16px; border-radius: 16px; 
+  display: inline-block; backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+.wrap {
+  overflow-x: auto;
+  border: 2px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  background: var(--surface);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 15px 35px rgba(255, 182, 193, 0.15); 
+}
+table { border-collapse: collapse; width: 100%; min-width: 1180px; font-size: .95rem; }
+thead th { 
+  position: sticky; top: 0; 
+  background: rgba(255, 240, 245, 0.95); 
+  text-align: left; font-weight: 800; padding: 16px 18px; 
+  border-bottom: 3px solid var(--c); white-space: nowrap; color: var(--ink); 
+  z-index: 2; font-size: 1rem;
+}
+tbody td { padding: 14px 18px; vertical-align: top; border-bottom: 1px dashed var(--line); transition: background 0.2s ease; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: var(--surface-2); }
+
+td.w { 
+  position: sticky; left: 0; 
+  background: rgba(255, 255, 255, 0.95); 
+  min-width: 140px; max-width: 200px; 
+  border-right: 2px dashed rgba(255, 182, 193, 0.4); 
+  z-index: 1;
+}
+tbody tr:hover td.w { background: rgba(255, 245, 248, 1); }
+td.w .hw { font-family: var(--font-head); font-weight: 800; font-size: 1.2rem; color: var(--c); line-height: 1.3; overflow-wrap: anywhere; }
+td.w .pos { font-style: italic; color: var(--muted); font-size: .85rem; font-weight: 700; margin-top: 4px; display: inline-block; background: rgba(255, 240, 245, 0.8); padding: 2px 8px; border-radius: 8px;}
+td.w .phonetic { font-family: var(--font-body); color: var(--focus-hover); font-size: .9rem; font-weight: 800; margin-top: 6px; }
+td .vi { margin-top: 6px; font-weight: 800; color: var(--ink); font-size: 1.05rem;}
+
+td .tag { 
+  display: inline-block; font-weight: 800; font-size: .8rem; margin-right: 6px; 
+  background: rgba(255,255,255,0.9); padding: 3px 10px; border-radius: 12px; 
+  border: 1px solid rgba(255, 182, 193, 0.4); 
+  box-shadow: 0 2px 4px rgba(255,182,193,0.1);
+}
+td .tag.s { color: var(--syn); }
+td .tag.a { color: var(--ant); }
+
+td div + div { margin-top: 8px; }
+td ul.ph { margin: 0; padding-left: 20px; }
+td ul.ph li { margin-bottom: 6px; font-weight: 600; }
+td ul.ph li::marker { color: var(--focus-hover); }
+td b { font-weight: 800; color: var(--ink); }
+
+td.ex { 
+  font-style: italic; color: #5a5a5a; font-weight: 600; 
+  background: rgba(255, 250, 250, 0.7); 
+  padding: 10px 14px; border-radius: 12px; 
+  display: inline-block; width: 100%; box-sizing: border-box;
+  border-left: 3px solid var(--focus);
+}
+td.ex b { font-style: normal; color: var(--focus-hover); font-weight: 800; }
+
+th.c-m, td.c-m { min-width: 250px; }
+th.c-s, td.c-s { min-width: 190px; }
+th.c-e, td.c-e { min-width: 250px; }
+th.c-c, td.c-c { min-width: 230px; }
+th.c-n, td.c-n { min-width: 250px; }
+
+::-webkit-scrollbar { width: 14px; height: 14px; }
+::-webkit-scrollbar-track { background: rgba(255, 240, 245, 0.6); border-radius: 14px; margin: 6px;}
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--focus), var(--focus-hover)); border-radius: 14px; border: 4px solid rgba(255, 240, 245, 0.8); }
+::-webkit-scrollbar-thumb:hover { background: #ff5285; }
+
+.view-tabs {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 4px;
+}
+.view-tabs button, .mode-tabs button, .difficulty-tabs button {
+  font: inherit;
+  font-weight: 800;
+  color: var(--ink);
+  cursor: pointer;
+}
+.view-tabs button {
+  padding: 7px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+}
+.view-tabs button[aria-selected="true"] {
+  color: var(--focus-hover);
+  background: rgba(255, 143, 179, 0.13);
+  border-color: rgba(255, 143, 179, 0.28);
+}
+.view-panel[hidden], .activity-panel[hidden] { display: none !important; }
+.study-view {
+  max-width: 1360px;
+  margin: 20px auto 60px;
+  padding: 24px;
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(255, 182, 193, 0.15);
+}
+.study-controls, .activity-heading, .activity-actions, .writing-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+.study-controls { margin-bottom: 22px; }
+.study-controls label, .writing-label { font-weight: 800; }
+.study-controls select {
+  min-width: 230px;
+  max-width: 100%;
+  padding: 9px 36px 9px 14px;
+  font: inherit;
+  font-weight: 700;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+}
+.study-progress { margin-left: auto; color: var(--muted); font-weight: 700; }
+.mode-tabs, .difficulty-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.mode-tabs { margin-bottom: 20px; border-bottom: 1px solid var(--line); }
+.mode-tabs button, .difficulty-tabs button {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.75);
+}
+.mode-tabs button[aria-selected="true"], .difficulty-tabs button[aria-pressed="true"] {
+  color: #fff;
+  border-color: var(--focus-hover);
+  background: var(--focus-hover);
+}
+.activity-heading { justify-content: space-between; margin-bottom: 14px; }
+.activity-heading h2, .writing-prompt h2 { margin: 0; font-size: 1.35rem; color: var(--focus-hover); }
+.activity-heading span { color: var(--muted); font-weight: 800; }
+.study-card {
+  max-width: 760px;
+  min-height: 250px;
+  margin: 0 auto 18px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid var(--line);
+  border-radius: 20px;
+  box-shadow: 0 10px 28px rgba(255, 143, 179, 0.12);
+}
+.study-term { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--focus-hover); overflow-wrap: anywhere; }
+.study-meta { margin-top: 4px; color: var(--muted); font-weight: 700; }
+.study-answer { max-width: 58ch; margin: 18px auto 0; font-size: 1.05rem; white-space: pre-line; }
+.activity-actions { justify-content: center; }
+.activity-actions button, #quiz-next, #reading-next {
+  padding: 9px 16px;
+  font: inherit;
+  font-weight: 800;
+  color: #fff;
+  border: 1px solid var(--focus-hover);
+  border-radius: 12px;
+  background: var(--focus);
+  cursor: pointer;
+}
+.activity-actions button:hover, #quiz-next:hover, #reading-next:hover { background: var(--focus-hover); }
+.difficulty-tabs { margin-bottom: 18px; }
+.quiz-prompt {
+  max-width: 850px;
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.quiz-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 900px; }
+.quiz-options button {
+  min-height: 52px;
+  padding: 12px 16px;
+  text-align: left;
+  font: inherit;
+  font-weight: 700;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.quiz-options button:hover:not(:disabled) { border-color: var(--focus-hover); background: var(--surface-2); }
+.quiz-options button:disabled { cursor: default; opacity: 0.82; }
+.quiz-options button.correct { border-color: #58a99a; background: rgba(123, 196, 196, 0.25); }
+.quiz-options button.incorrect { border-color: #e17680; background: rgba(255, 154, 158, 0.25); }
+.quiz-feedback { min-height: 1.6em; font-weight: 800; }
+.reading-article {
+  max-width: 980px;
+  margin: 0 auto 28px;
+  padding: 24px 30px;
+  background: rgba(255, 255, 255, 0.78);
+  border-left: 6px solid var(--c-change);
+  border-radius: 16px;
+}
+.reading-kicker { color: var(--focus-hover); font-size: .88rem; font-weight: 800; text-transform: uppercase; }
+.reading-article h2 { margin: 4px 0; font-family: var(--font-head); font-size: 1.6rem; color: var(--ink); }
+.reading-level-label { margin: 0 0 18px; color: var(--muted); font-weight: 700; }
+.reading-passage { max-width: 78ch; font-size: 1.04rem; line-height: 1.8; }
+.reading-passage p { margin: 0 0 14px; }
+.reading-passage p:last-child { margin-bottom: 0; }
+.reading-quiz { padding-top: 20px; border-top: 1px solid var(--line); }
+
+@media (max-width:900px){
+  header.top { margin: 10px; padding: 12px 14px; flex-wrap: wrap; }
+  .header-copy { flex: 1 1 100%; }
+  .view-tabs { max-width: 100%; overflow-x: auto; }
+  .view-tabs button { white-space: nowrap; }
+  .study-view { margin: 10px; padding: 18px; border-radius: 20px; }
+  .study-controls select { flex: 1 1 100%; }
+  .study-progress { margin-left: 0; }
+  .quiz-options { grid-template-columns: 1fr; }
+  .study-card { min-height: 220px; padding: 20px; }
+  .bar-in { display: flex; flex-wrap: wrap; padding: 8px 10px; }
+  .bar { margin: 10px; border-radius: 14px; top: 8px;}
+  .nav { border-left: none; padding-left: 0; margin-left: 0; width: 100%; }
+  .wrap { border: 0; background: transparent; overflow: visible; box-shadow: none; backdrop-filter: none; }
+  table, thead, tbody, tr, td { display: block; min-width: 0; width: 100%; }
+  thead { display: none; }
+  tbody tr { 
+    background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); 
+    border: 2px solid rgba(255, 255, 255, 0.9); border-left: 8px solid var(--c); 
+    border-radius: 24px; margin-bottom: 20px; padding: 12px 0; 
+    box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2); 
+  }
+  tbody td { border: 0; padding: 10px 20px; min-width: 0!important; max-width: none!important; }
+  td.w { position: static; border: 0; background: transparent; padding-bottom: 0;}
+  tbody tr:hover td, tbody tr:hover td.w { background: transparent; }
+  td[data-l]::before { 
+    content: attr(data-l); display: block; font-size: .85rem; font-weight: 800; 
+    color: var(--focus-hover); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .melody-widget {
+    transform: scale(0.4); 
+    bottom: 10px;
+    right: 10px;
+  }
+  @keyframes floatWidget {
+    0%, 100% { transform: scale(0.4) translateY(0); }
+    50% { transform: scale(0.4) translateY(-8px); }
+  }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="header-copy">
+    <h1>Tổng hợp từ vựng B2 theo chủ đề</h1>
+    <div class="legend">
+      <span><b>Syn.</b> đồng nghĩa hoặc gần nghĩa</span>
+      <span><b>Ant.</b> trái nghĩa hoặc đối lập</span>
+    </div>
+  </div>
+  <nav class="view-tabs" role="tablist" aria-label="Khu vực học">
+    <button id="tab-vocabulary" type="button" role="tab" aria-selected="true" aria-controls="view-vocabulary">Từ vựng</button>
+    <button id="tab-review" type="button" role="tab" aria-selected="false" aria-controls="view-review">Ôn tập</button>
+    <button id="tab-reading" type="button" role="tab" aria-selected="false" aria-controls="view-reading">Reading</button>
+  </nav>
+</header>
+
+<div id="view-vocabulary" class="view-panel" role="tabpanel" aria-labelledby="tab-vocabulary">
+<div class="bar">
+  <div class="bar-in">
+    <div id="topics" role="group" aria-label="Chủ đề"></div>
+    <nav class="nav" id="nav" aria-label="Các phần"></nav>
+  </div>
+</div>
+
+<main id="app"></main>
+</div>
+
+<section id="view-review" class="view-panel study-view" role="tabpanel" aria-labelledby="tab-review" hidden>
+  <div class="study-controls">
+    <label for="study-unit">Unit</label>
+    <select id="study-unit"></select>
+    <span id="study-progress" class="study-progress" aria-live="polite"></span>
+  </div>
+  <div class="mode-tabs" role="tablist" aria-label="Chế độ ôn tập">
+    <button id="mode-cards" type="button" role="tab" aria-selected="true" aria-controls="review-cards">Flashcard</button>
+    <button id="mode-quiz" type="button" role="tab" aria-selected="false" aria-controls="review-quiz">Quiz</button>
+  </div>
+  <div id="review-cards" class="activity-panel" role="tabpanel" aria-labelledby="mode-cards">
+    <div class="activity-heading"><h2>Flashcard</h2><span id="card-position" aria-live="polite"></span></div>
+    <article class="study-card" aria-live="polite">
+      <div id="card-term" class="study-term"></div>
+      <div id="card-meta" class="study-meta"></div>
+      <div id="card-answer" class="study-answer" hidden></div>
+    </article>
+    <div class="activity-actions">
+      <button id="card-reveal" type="button">Hiện đáp án</button>
+      <button id="card-review" type="button" hidden>Ôn lại</button>
+      <button id="card-known" type="button" hidden>Đã nhớ</button>
+      <button id="card-next" type="button" hidden>Thẻ tiếp theo</button>
+    </div>
+  </div>
+  <div id="review-quiz" class="activity-panel" role="tabpanel" aria-labelledby="mode-quiz" hidden>
+    <div class="activity-heading"><h2>Quiz</h2><span id="quiz-score" aria-live="polite"></span></div>
+    <div class="difficulty-tabs" role="group" aria-label="Mức độ quiz">
+      <button type="button" data-level="basic" aria-pressed="true">Cơ bản</button>
+      <button type="button" data-level="intermediate" aria-pressed="false">Trung cấp</button>
+      <button type="button" data-level="advanced" aria-pressed="false">Vận dụng</button>
+    </div>
+    <div id="quiz-prompt" class="quiz-prompt" aria-live="polite"></div>
+    <div id="quiz-options" class="quiz-options"></div>
+    <p id="quiz-feedback" class="quiz-feedback" aria-live="polite"></p>
+    <button id="quiz-next" type="button" hidden>Câu tiếp theo</button>
+  </div>
+</section>
+
+<section id="view-reading" class="view-panel study-view" role="tabpanel" aria-labelledby="tab-reading" hidden>
+  <div class="study-controls">
+    <label for="reading-unit">Unit</label>
+    <select id="reading-unit"></select>
+    <label for="reading-level">Level</label>
+    <select id="reading-level">
+      <option value="b2">B2</option>
+      <option value="c1">C1</option>
+    </select>
+  </div>
+  <article class="reading-article">
+    <div id="reading-unit-title" class="reading-kicker"></div>
+    <h2 id="reading-title"></h2>
+    <p id="reading-level-label" class="reading-level-label"></p>
+    <div id="reading-passage" class="reading-passage"></div>
+  </article>
+  <div class="reading-quiz">
+    <div class="activity-heading"><h2>Comprehension</h2><span id="reading-progress" aria-live="polite"></span></div>
+    <p id="reading-question" class="quiz-prompt" aria-live="polite"></p>
+    <div id="reading-options" class="quiz-options"></div>
+    <p id="reading-feedback" class="quiz-feedback" aria-live="polite"></p>
+    <button id="reading-next" type="button" hidden>Câu tiếp theo</button>
+  </div>
+</section>
+
+<script>
+/* =================== DỮ LIỆU UNIT 2: TRAVEL =================== */
+const U2_VOCAB = [
+  ["voyage", "n", "Chuyến đi dài ngày trên biển hoặc trong không gian.", "Chuyến đi biển / vũ trụ; hải trình", "", "", "The maiden *voyage* of the Titanic ended in tragedy.", "maiden voyage, go on a voyage", "Tragedy: thảm họa nghịch cảnh", ""],
+  ["journey", "n", "Chuyến đi từ nơi này đến nơi khác (thường dài, tập trung vào quá trình di chuyển).", "Hành trình", "", "", "Have a safe *journey* back home!", "a long/tiring journey, embark on a journey", "embark on a journey: bắt đầu chuyến đi", ""],
+  ["trip", "n", "Chuyến đi ngắn ngày đến một nơi rồi quay về.", "Chuyến đi ngắn", "", "", "We went on a day *trip* to the countryside.", "business trip, day trip, school trip", "", ""],
+  ["travel", "n, v", "Danh từ không đếm được chỉ việc di chuyển nói chung; hoặc là động từ.", "Sự đi lại / Du lịch nói chung", "", "", "Air *travel* has become much cheaper in recent years.", "space travel, travel agent", "travel agent: đại lý du lịch", ""],
+  ["excursion", "n", "Chuyến đi chơi/tham quan ngắn ngày, thường do một nhóm tổ chức.", "Chuyến tham quan ngắn", "", "", "There is an optional *excursion* to the local museum.", "go on an excursion, organize an excursion", "", ""],
+  ["view", "n", "Cảnh vật nhìn thấy từ một vị trí cố định (cửa sổ, đỉnh núi).", "Quang cảnh (từ một điểm)", "", "", "The room has a magnificent *view* of the sea.", "have a view of sth, panoramic view", "panoramic view: toàn cảnh", ""],
+  ["sight", "n", "Cảnh đẹp nổi tiếng thu hút du khách; hoặc khả năng nhìn.", "Danh lam thắng cảnh / Tầm nhìn", "", "", "We spent the afternoon seeing the *sights* of Paris.", "catch sight of sb/sth, go sightseeing, local sights", "", ""],
+  ["world", "n", "Toàn bộ Trái Đất cùng với con người, xã hội và văn hóa.", "Thế giới / Trái Đất", "", "", "He wants to travel around the *world*.", "all over the world, in the real world", "", ""],
+  ["earth", "n", "Hành tinh chúng ta đang sống; hoặc lớp đất đá.", "Trái Đất (Hành tinh) / Đất", "", "", "The moon revolves around the *earth*.", "on earth, down-to-earth", "", ""],
+  ["area", "n", "Một phần của một thành phố, quốc gia hoặc bề mặt nào đó.", "Khu vực / Vùng", "", "", "This *area* is famous for its historical buildings.", "residential area, rural/urban area", "rural (a): miền quê; urban (a): thành thị", ""],
+  ["territory", "n", "Vùng đất thuộc chủ quyền của một quốc gia, quân đội hoặc động vật.", "Lãnh thổ", "", "", "The army occupied the enemy's *territory*.", "national territory, disputed territory", "", ""],
+  ["season", "n", "Một trong bốn mùa trong năm hoặc mùa du lịch.", "Mùa", "", "", "Autumn is my favorite *season*.", "peak season, off-peak season, high season", "high season = peak season", ""],
+  ["period", "n", "Một khoảng thời gian cụ thể (ngắn hoặc dài).", "Khoảng thời gian", "", "", "He lived abroad for a short *period* of time.", "period of time, trial period", "trial period: giai đoạn thử nghiệm", ""],
+  ["fare", "n", "Số tiền trả khi di chuyển bằng phương tiện giao thông (xe buýt, tàu, máy bay).", "Tiền xe / Vé xe", "", "", "Bus *fares* have increased significantly this year.", "bus/train/air fare, pay the fare", "", ""],
+  ["ticket", "n", "Tờ giấy/mã chứng nhận đã trả tiền để đi tàu xe, xem phim, tham quan.", "Vé", "", "", "I bought a one-way *ticket* to London.", "return ticket, one-way ticket, admission ticket", "return ticket: vé đi về", ""],
+  ["fee", "n", "Số tiền trả cho các dịch vụ chuyên nghiệp (luật sư, bác sĩ, trường học).", "Phí / Học phí / Thù lao", "", "", "Students must pay their tuition *fees* before term starts.", "tuition fee, entrance fee", "tuition fee: học phí", ""],
+  ["miss", "v", "Nhỡ tàu xe, bỏ lỡ cơ hội hoặc nhớ ai đó.", "Nhớ ai đó / Bỏ lỡ", "", "", "Hurry up or we will *miss* the train!", "miss the bus/flight, miss an opportunity", "", ""],
+  ["lose", "v", "Không còn giữ thứ gì đó (đồ vật, chìa khóa, tiền bạc).", "Làm mất / Thất lạc", "", "", "I *lost* my passport at the airport.", "lose one's way, lose temper, lose contact with", "lose one's way: lạc đường", ""],
+  ["take", "v", "Đưa ai đó/thứ gì đó từ vị trí này đến vị trí khác (xa người nói).", "Dẫn đi / Đưa đi", "", "", "Can you *take* these books to the library?", "take sb to a place, take time", "take time: mất thời gian", ""],
+  ["bring", "v", "Mang ai đó/thứ gì đó đến vị trí người nói.", "Mang lại / Đem đến", "", "", "Don't forget to *bring* your camera with you.", "bring sth with you, bring sth to light", "bring sth to light: vạch trần, tiết lộ", ""],
+  ["go", "v", "Di chuyển từ nơi này sang nơi khác (không nhấn mạnh hướng đưa/mang).", "Đi", "", "", "We plan to *go* to Japan next summer.", "go on foot, go abroad", "", ""],
+  ["book", "v", "Đặt chỗ trước (phòng khách sạn, vé xe, bàn ăn).", "Đặt trước", "", "", "I'd like to *book* a double room for two nights.", "book in advance, book a hotel/ticket/room, fully booked", "book in advance: đặt trước", ""],
+  ["keep", "v", "Tiếp tục giữ hoặc lưu trữ thứ gì đó.", "Giữ / Duy trì", "", "", "You can *keep* the change.", "keep in touch, keep a secret", "keep in touch: liên lạc", ""],
+  ["arrive", "v", "Đến một điểm đến. Có giới từ đi kèm.", "Đến nơi", "", "", "We *arrived* in London late at night.", "arrive at the airport/station, arrive in a city/country", "arrive at - nơi nhỏ / arrive in - lớn", ""],
+  ["reach", "v", "Đến được một địa điểm hoặc đạt mức nào đó. KHÔNG dùng giới từ.", "Đến được / Đạt tới", "", "", "They finally *reached* their destination after a long journey.", "reach a decision/agreement, reach the top", "reach a decision: đạt thỏa thuận", ""],
+  ["live", "v", "Sống lâu dài, cố định tại một nơi.", "Sống / Cư trú", "", "", "She has *lived* in Hanoi for ten years.", "live on one's own, live a happy life", "", ""],
+  ["stay", "v", "Ở tạm thời tại một nơi (khách sạn, nhà bạn) trong thời gian ngắn.", "Ở lại / Tạm trú", "", "", "We *stayed* at a luxury hotel during our vacation.", "stay at a hotel, stay in touch", "", ""],
+  ["border", "n", "Đường ranh giới chính thức chia cắt giữa hai quốc gia hoặc tiểu bang.", "Biên giới", "", "", "We had to show our passports at the *border*.", "cross the border, border control", "", ""],
+  ["edge", "n", "Phần ngoài cùng của một vật thể, bề mặt.", "Rìa / Mép", "", "", "Don't stand too close to the *edge* of the cliff.", "on the edge of sth, cutting-edge", "", ""],
+  ["line", "n", "Đường kẻ nối dài hoặc vạch phân cách.", "Đường ranh giới / Đường vạch", "", "", "Do not cross the white *line*.", "finish line, boundary line", "", ""],
+  ["length", "n", "Khoảng cách đo được từ đầu này đến đầu kia của một vật.", "Chiều dài", "", "", "The *length* of the pool is 50 meters.", "full length, in length", "", ""],
+  ["distance", "n", "Độ xa giữa hai điểm/hai địa điểm.", "Khoảng cách", "", "", "What is the *distance* between Hanoi and Da Nang?", "in the distance, long-distance", "", ""],
+  ["guide", "v", "Chỉ đường hoặc đưa thông tin giúp ai đó đi đúng hướng.", "Hướng dẫn / Dẫn đường", "", "", "The local tour host *guided* us through the ancient city.", "guide sb through sth, tour guide", "", ""],
+  ["lead", "v", "Đi phía trước để dẫn đường hoặc lãnh đạo một tập thể.", "Dẫn dắt / Đi đầu", "", "", "The path *leads* directly to the beach.", "lead the way, lead to sth", "Leadership: kĩ năng lãnh đạo", ""],
+  ["native", "adj, n", "Thuộc về nơi sinh ra hoặc gắn liền với nguồn gốc.", "Bản địa / Bản xứ", "", "", "English is not my *native* language.", "native speaker, native land/country", "", ""],
+  ["home", "adj, n", "Nơi sinh sống, gắn bó tình cảm hoặc điểm xuất phát.", "Quê hương / Nhà", "", "", "Hanoi is my *home* town.", "hometown, make yourself at home", "make yourself at home: cứ tự nhiên", ""]
+];
+
+const U2_PHRASAL_VERBS = [
+  ["catch up with", "phr v", "Reach the same point/level as", "bắt kịp, đuổi kịp", "", "", "I was walking too slowly, so I ran to *catch up with* my classmates.", "", ""],
+  ["check in", "phr v", "Register at a hotel or airport", "làm thủ tục nhận phòng / làm thủ tục lên máy bay", "", "", "We need to *check in* at the airport two hours before the flight.", "", ""],
+  ["check out", "phr v", "Leave a hotel after paying", "trả phòng khách sạn; rời khỏi", "", "", "We *checked out* of the hotel before 11 a.m.", "", ""],
+  ["drop off", "phr v", "Let someone get out of a vehicle", "đưa ai đến một nơi rồi để họ xuống", "", "", "Can you *drop* me *off* at the library on your way to work?", "", ""],
+  ["get back", "phr v", "Return from a place", "trở về, quay lại", "", "", "What time did you *get back* from school yesterday?", "", ""],
+  ["go away", "phr v", "Leave a place/travel for a period", "đi xa, rời đi", "", "", "My parents *went away* for the weekend.", "", ""],
+  ["keep up with", "phr v", "Move/progress at the same rate", "theo kịp, keep the same level as", "", "", "I can't *keep up with* my brother when he runs.", "", ""],
+  ["make for", "phr v", "Go in the direction of", "đi về phía, hướng tới", "", "", "As soon as it started raining, everyone *made for* the nearest café.", "", ""],
+  ["pick up", "phr v", "Collect someone in a vehicle", "đón ai bằng phương tiện", "", "", "I'll *pick* you *up* outside the school at 5 o'clock.", "", ""],
+  ["pull in", "phr v", "Stop by the side of the road in a car", "tấp vào / dừng lại", "", "", "The taxi *pulled in* outside the hotel.", "", ""],
+  ["run over", "phr v", "Hit with a car", "cán, đâm vào bằng xe", "", "", "The car almost *ran over* a dog in the street.", "", ""],
+  ["see off", "phr v", "Go to a station/airport to say goodbye", "tiễn ai", "", "", "We went to the station to *see* our grandparents *off*.", "", ""],
+  ["set out", "phr v", "Start a journey", "bắt đầu một chuyến đi / khởi hành", "", "", "We *set out* before sunrise to reach the mountain early.", "", ""],
+  ["set off", "phr v", "Start a journey", "khởi hành, bắt đầu chuyến đi", "", "", "They *set off* for the beach at 7 a.m.", "", ""],
+  ["take off", "phr v", "Leave the ground (plane)", "cất cánh, leave the ground", "", "", "The plane *took off* just as we reached the airport.", "", ""],
+  ["turn round", "phr v", "Go back in the opposite direction", "quay lại, đổi hướng", "", "", "We realized we had forgotten our tickets, so we *turned round* and went home.", "", ""]
+];
+
+const U2_COLLOCATIONS = [
+  ["accident", "n", "have an accident = bị tai nạn¦be (involved) in an accident = liên quan đến một vụ tai nạn¦do sth by accident = vô tình làm gì", "", "", "", "He had a minor car *accident* on his way to work.", "", ""],
+  ["advance", "n, v", "in advance = trước, đặt trước¦advance to/towards a place = tiến về phía nào đó", "", "", "", "You should book your tickets well in *advance*.", "", ""],
+  ["ahead", "adv", "go straight ahead = đi thẳng về phía trước¦go ahead = cứ tự nhiên, tiến hành đi¦be ahead of sth/sb = đi trước, dẫn trước", "", "", "", "Walk down this road and go straight *ahead*.", "", ""],
+  ["direction", "n", "a change of direction = sự thay đổi hướng đi/chiến lược¦in the direction of sth = theo hướng của cái gì¦in this/that direction = theo hướng này/đó", "", "", "", "Drive in the *direction* of the airport.", "", ""],
+  ["head", "n, v", "off the top of your head = theo như tôi nhớ/biết (không suy nghĩ nhiều)¦head for/towards a place = hướng tới nơi nào¦head over heels (in love) = yêu say đắm", "", "", "", "We are *heading* for the beach this afternoon.", "", ""],
+  ["holiday", "n", "go/be on holiday = đi nghỉ mát / đang đi nghỉ mát¦have/take a holiday = đi nghỉ, nghỉ ngơi¦bank holiday = ngày nghỉ lễ quốc gia", "", "", "", "We are going on *holiday* next week.", "", ""],
+  ["left", "n, adj, adv", "go/turn/etc left = rẽ trái¦on the left = ở bên trái¦on the left-hand side = ở phía bên tay trái¦in the left-hand corner = ở góc bên trái¦left-handed = thuận tay trái", "", "", "", "Turn *left* at the traffic lights.", "", ""],
+  ["route", "n", "plan your/a route = lên kế hoạch lịch trình¦take a route = đi theo tuyến đường nào đó", "", "", "", "We spent the evening planning our *route* across Europe.", "", ""],
+  ["sights", "n", "see the sights = ngắm cảnh/tham quan", "", "", "", "We spent two days seeing the *sights* in Paris.", "", ""],
+  ["sightseeing", "n", "go sightseeing = đi tham quan", "", "", "", "They decided to go *sightseeing* after checking into the hotel.", "", ""],
+  ["speed", "n", "at (high/full/etc) speed = ở tốc độ cao/tối đa¦a burst of speed = tăng tốc đột ngột¦speed limit = giới hạn tốc độ", "", "", "", "The car was traveling at high *speed*.", "", ""],
+  ["tour", "n, v", "go on/take a tour of/(a)round somewhere = đi dạo quanh, tham quan¦tour a place = du lịch/tham quan một nơi¦tour guide = hướng dẫn viên du lịch", "", "", "", "We took a *tour* around the historic city center.", "", ""],
+  ["trip", "n", "business trip = chuyến công tác¦school trip = chuyến đi thực tế của trường¦go on a trip = đi chơi¦take a trip (to a place) = thực hiện chuyến đi tới...", "", "", "", "He is currently away on a business *trip*.", "", ""],
+  ["way", "n", "lose/make/find your way = lạc đường/đến nơi/tìm được đường¦in a way = ở một mức độ nào đó, phần nào¦on the way = trên đường đi¦go all the way (to sth/swh) = đi một mạch tới đâu", "", "", "", "We lost our *way* in the forest.", "", ""]
+];
+
+const U2_WORD_PATTERNS = [
+  ["afraid", "afraid of sth/sb/doing = sợ ai/cái gì/làm gì¦afraid to do = sợ phải làm gì", "She is *afraid of* dogs. / I was afraid to ask for help.", ""],
+  ["appear", "appear to be = có vẻ như là", "The situation *appears to be* improving.", ""],
+  ["arrange", "arrange sth (with sb) = sắp xếp cái gì với ai¦arrange for sb to do = sắp xếp cho ai làm gì", "I will *arrange* a meeting with the manager tomorrow.", ""],
+  ["arrive", "arrive in/at a place = đến một nơi nào đó¦arrive here/there = đến đây/đó", "They *arrived in* London yesterday.", "Dùng 'arrive at' với địa điểm nhỏ, 'arrive in' với thành phố/quốc gia."],
+  ["continue", "continue sth/doing = tiếp tục việc gì/làm gì¦continue to do = tiếp tục để làm gì¦continue with sth = tiếp tục với việc gì", "She *continued* her studies at university.", ""],
+  ["differ", "differ from sth/sb = khác biệt so với cái gì/ai", "My opinion *differs from* yours.", ""],
+  ["dream", "dream about/of sth/sb/doing = mơ về cái gì/ai/làm gì", "Last night I *dreamed about* traveling to space.", ""],
+  ["invite", "invite sb to do = mời ai đó làm gì", "They *invited* us to join them for dinner.", ""],
+  ["keen", "keen to do = háo hức/mong muốn làm gì¦keen on sth/sb/doing = đam mê cái gì/ai/làm gì", "He is *keen to* learn new skills.", ""],
+  ["live", "live in/at a place = sống ở nơi nào đó¦live on/for sth = sống dựa vào / sống vì cái gì¦live here/there = sống ở đây/đó", "I *live in* a big city.", ""],
+  ["regret", "regret (not) doing = hối tiếc (không) làm gì trong quá khứ¦regret sth = hối hận về điều gì¦regret to tell/inform you = rất tiếc phải thông báo", "I *regret not* studying harder for the exam.", "Phân biệt V-ing (chuyện đã qua) và To V (chưa/đang xảy ra)."],
+  ["think", "think of/about sth/sb/doing = nghĩ về điều gì/ai/làm gì", "What do you *think of* this idea?", ""],
+  ["write", "write about sth/sb/doing = viết về điều gì/ai/làm gì¦write (sth) (to sb) = viết cái gì cho ai¦write sb sth = viết cho ai cái gì¦write sth down = viết ra/ghi chú lại", "She *wrote* a book *about* her travel experiences.", ""]
+];
+
+/* =================== DỮ LIỆU UNIT 4: HOBBIES =================== */
+const U4_VOCAB = [
+  ["pitch","n","Area painted with lines for games like football/rugby","Sân cỏ chơi bóng đá, rugby","Field, ground","","The players ran onto the football *pitch*.","Football pitch, rugby pitch","Sân cỏ có kẻ vạch.","/pɪtʃ/"],
+  ["track","n","Path or road used for racing","Đường chạy, đường đua","Course, circuit","","The runners took their positions on the *track*.","Running track, race track","Dùng cho điền kinh, đua xe.","/træk/"],
+  ["court","n","Marked area for games like tennis, basketball","Sân chơi tennis, bóng rổ, cầu lông","Playing area","","We reserved a tennis *court* for two hours.","Tennis court, basketball court","Sân có kẻ vạch, diện tích vừa.","/kɔːt/"],
+  ["course","n","Land used for golf or horse racing","Sân golf, đường đua ngựa","Golf links","","He spent the afternoon on the golf *course*.","Golf course, racecourse","Sân có diện tích rộng, trải dài.","/kɔːs/"],
+  ["ring","n","Raised square area for boxing/wrestling","Võ đài boxing, đấu vật","Arena, square","","The two boxers stepped into the *ring*.","Boxing ring, wrestling ring","Võ đài có dây đai xung quanh.","/rɪŋ/"],
+  ["rink","n","Specially prepared surface of ice for skating","Sân trượt băng","Ice rink","","Kids are skating at the local ice *rink*.","Ice rink, skating rink","Sân trượt (băng, patin).","/rɪŋk/"],
+  ["win","v","Achieve victory in a game/competition","Thắng trận đấu, giải thưởng","Triumph, succeed","lose","Our team hopes to *win* the tournament.","Win a game/prize/match","Dùng với đối tượng là trận đấu, giải thưởng.","/wɪn/"],
+  ["beat","v","Defeat someone in a game or competition","Đánh bại ai đó","Defeat, overcome","lose to","She managed to *beat* her rival in two sets.","Beat an opponent / team","Dùng với đối tượng là người chơi, đối thủ hoặc đội khác.","/biːt/"],
+  ["score","v, n","Get a goal/point in a game; total points","Ghi bàn/điểm; điểm số","Gain points, tally","","He *scored* two goals in the second half.","Score a goal/point, final score","Dùng với bàn thắng hoặc điểm số cụ thể.","/skɔː(r)/"],
+  ["play","n","Story performed by actors in a theatre","Vở kịch","Drama, show","","We went to the theatre to watch a *play*.","Put on a play, theatrical play","Nghệ thuật sân khấu.","/pleɪ/"],
+  ["game","n","Activity or sport played according to rules","Trò chơi, trận đấu","Match, contest","","Let's play a board *game* tonight.","Board game, video game","Trò chơi có quy tắc hoặc trận đấu thể thao nói chung.","/ɡeɪm/"],
+  ["spectator","n","Person who watches an event in person","Khán giả trực tiếp tại sân","Onlooker, observer","","Thousands of *spectators* filled the stadium.","Spectator sport, crowd of spectators","Khán giả có mặt trực tiếp tại khán đài.","/spekˈteɪtə(r)/"],
+  ["viewer","n","Person watching TV or videos","Khán giả truyền hình, người xem qua màn ảnh","Audience, watcher","","Millions of *viewers* watched the match live on TV.","TV viewer, online viewer","Khán giả theo dõi qua màn hình (tivi, điện thoại).","/ˈvjuːə(r)/"],
+  ["umpire","n","Official in tennis, cricket, baseball","Trọng tài (ngồi cố định)","Official, judge","","The *umpire* called the ball out.","Chair umpire, tennis umpire","Trọng tài ngồi ghế, cố định một chỗ (tennis, cầu lông).","/ˈʌmpaɪə(r)/"],
+  ["referee","n","Official in football, basketball, boxing moving on field","Trọng tài (di chuyển trên sân)","Official, arbiter","","The *referee* blew the whistle to end the match.","Football referee, match referee","Trọng tài chạy trên sân trực tiếp quản lý trận đấu (bóng đá).","/ˌrefəˈriː/"],
+  ["final","n, adj","Last match in a tournament; last","Trận chung kết; cuối cùng","Decider, last","first, beginning","Both teams are preparing for the *final*.","Reach the final, final match","Trận chung kết của một giải đấu.","/ˈfaɪnl/"],
+  ["finale","n","Climax or last part of a show/music piece","Phần kết hoành tráng","Climax, conclusion","","The concert ended with a spectacular *finale*.","Grand finale, season finale","Đoạn kết, màn trình diễn cuối đầy hoành tráng.","/fɪˈnɑːli/"],
+  ["end","n","Point where sth stops","Điểm kết thúc, sự kết thúc","Stop, conclusion","beginning, start","They worked together until the *end* of the day.","In the end, at the end of","Mốc kết thúc về mặt thời gian hoặc không gian.","/end/"],
+  ["ending","n","Last part of a story, film, or play","Cái kết của truyện, phim","Outcome, resolution","beginning","The movie had a very emotional *ending*.","Happy ending, sad ending","Phần kết của một cốt truyện, mạch truyện.","/ˈendɪŋ/"],
+  ["bat","n","Wooden bar used in baseball, cricket, table tennis","Gậy/vợt bóng bàn, bóng chày","Club, paddle","","He hit the ball hard with his wooden *bat*.","Cricket bat, baseball bat","Gậy bằng gỗ/nhựa dẹt.","/bæt/"],
+  ["stick","n","Long thin piece of wood/plastic in hockey","Gậy khúc côn cầu","Cue, pole","","She bought a new hockey *stick* yesterday.","Hockey stick","Gậy có hình dạng cong/dài.","/stɪk/"],
+  ["rod","n","Long thin pole used for fishing","Cần câu cá","Pole","","He bought a sturdy fishing *rod* for the trip.","Fishing rod","Dụng cụ chuyên dụng để câu cá.","/rɒd/"],
+  ["racket","n","Oval frame with net used in tennis/badminton","Vợt tennis, cầu lông","Racquet","","You need to string your tennis *racket*.","Tennis racket, badminton racket","Vợt có khung bầu dục và lưới căng bên trong.","/ˈrækɪt/"],
+  ["amateur","n, adj","Doing sth for pleasure, not money","Người nghiệp dư; nghiệp dư","Non-professional","professional","He is an *amateur* photographer who loves nature.","Amateur athlete, amateur level","Tham gia vì đam mê, không nhận lương chuyên nghiệp.","/ˈæmətə(r)/"],
+  ["professional","n, adj","Doing sth as a paid job","Người chuyên nghiệp; chuyên nghiệp","Expert, pro","amateur","She became a *professional* golfer at nineteen.","Professional player, career","Thi đấu, làm việc chuyên nghiệp để kiếm sống.","/prəˈfeʃənl/"],
+  ["sport","n","Games/physical activities in general","Thể thao nói chung","Athletics, activity","","Swimming is a fantastic all-around *sport*.","Team sport, play sport","Thể thao nói chung.","/spɔːt/"],
+  ["athletics","n","Sports activities like running, jumping","Môn điền kinh","Track and field","","She excels in track and field *athletics*.","Athletics event, field athletics","Bộ môn điền kinh (chạy, nhảy, ném, đẩy tạ).","/æθˈletɪks/"],
+  ["interval","n","Short break between parts of a play/concert","Thời gian nghỉ giữa các phần (kịch, hoà nhạc)","Break, pause","","Drinks were served during the *interval*.","During the interval","Giờ nghỉ giữa các phần trình diễn kịch, hòa nhạc, opera.","/ˈɪntəvl/"],
+  ["half time","n","Short break between two halves of a game","Giờ nghỉ giải lao giữa hiệp (thể thao)","Break, intermission","","The coach gave a talk at *half time*.","At half time","Giờ nghỉ giữa hai hiệp trong một trận đấu thể thao.","/ˌhɑːf ˈtaɪm/"],
+  ["draw","v, n","Finish with equal scores; tied result","Hòa; trận hòa","Tie, equalise","win, lose","The match ended in a 2-2 *draw*.","Draw a match, 1-1 draw","Tỉ số ngang bằng khi trận đấu kết thúc.","/drɔː/"],
+  ["equal","v","Reach the same level or score","San bằng, bằng điểm","Match, tie","","He managed to *equal* the world record.","Equal the score, equal a record","Hành động tấn công, ghi điểm để cân bằng tỉ số.","/ˈiːkwəl/"],
+  ["competitor","n","Person/team taking part in a competition","Thí sinh, người dự thi","Contestant, participant","","Each *competitor* receives a participation medal.","Key competitor, main competitor","Thí sinh, người tham gia trong cùng một cuộc thi rộng mở.","/kəmˈpetɪtə(r)/"],
+  ["opponent","n","Person playing against another in a game","Đối thủ trực tiếp","Rival, adversary","teammate, ally","He respected his *opponent* after the tough match.","Tough opponent, face an opponent","Đối thủ đối đầu trực tiếp trong một trận đấu tay đôi.","/əˈpəʊnənt/"]
+];
+
+const U4_PHRASAL_VERBS = [
+  ["bring forward","phr v","Change the date/time of an event earlier","Dời lịch lên sớm hơn","Advance, reschedule earlier","delay, put off","They decided to *bring forward* the meeting to Tuesday.","bring forward a meeting/event",""],
+  ["carry on","phr v","Continue doing something","Tiếp tục làm gì","Continue, keep going","stop, give up","Please *carry on* with your work while I am away.","carry on doing sth","Thường đi với 'with sth' hoặc 'doing sth'."],
+  ["get round to","phr v","Start doing sth after planning for a long time","Bắt đầu làm việc gì sau thời gian trì hoãn","Find time for","put off, delay","I finally *got round to* fixing the broken door.","get round to doing sth","Theo sau là V-ing."],
+  ["get up to","phr v","Do sth, especially sth you should not do","Làm điều gì đó (thường là trò quậy phá)","Be up to, scheme","","What did you *get up to* over the weekend?","get up to mischief/no good","Dùng trong ngữ cảnh không trang trọng."],
+  ["go in for","phr v","Enter a competition; enjoy an activity","Tham gia cuộc thi; thích/đam mê môn gì","Enter, engage in, like","pull out, give up","She decided to *go in for* the national singing contest.","go in for a competition/sport","Tham gia (thi đấu), thích thú một sở thích."],
+  ["go off","phr v","Stop liking something/someone","Không còn thích nữa","Dislike, lose interest","take to, like","I used to love fast food, but I've *gone off* it recently.","go off sth/sb","'go off' còn có nghĩa là ôi thiu (thức ăn)."],
+  ["join in","phr v","Participate in an activity with others","Tham gia vào (một hoạt động đang diễn ra)","Participate, take part","withdraw, pull out","Feel free to *join in* the game whenever you want.","join in a game/activity","Khác với 'take part in' ở chỗ 'join in' mang tính thân mật."],
+  ["knock out","phr v","Defeat and remove from competition; make unconscious","Đánh bại loại khỏi cuộc thi; hạ đo ván","Eliminate, render unconscious","","The boxer *knocked out* his rival in the third round.","knock sb out of a tournament","Dùng trong thể thao loại trực tiếp (K.O)."],
+  ["look out","phr v","Be careful","Cẩn thận, chú ý","Watch out, be cautious","ignore","*Look out*! There's a car coming towards us.","look out!","Thường đứng một mình ở dạng câu mệnh lệnh."],
+  ["pull out","phr v","Stop being involved in an activity/competition","Rút khỏi cuộc thi/hoạt động","Withdraw, quit","join in, go in for","He had to *pull out* of the match due to an injury.","pull out of a race/match",""],
+  ["put off","phr v","Postpone, delay","Hoãn lại","Postpone, delay, defer","bring forward","Never *put off* until tomorrow what you can do today.","put off doing sth","Theo sau là V-ing hoặc danh từ."],
+  ["put up with","phr v","Tolerate or accept an unpleasant situation","Chịu đựng","Tolerate, endure","complain, reject","I cannot *put up with* this noise any longer.","put up with sb/sth","Mang nghĩa chịu đựng một thứ gì đó khó chịu."],
+  ["take to","phr v","Start a habit or develop a liking for","Bắt đầu có thói quen/yêu thích","Adopt, get into","go off, give up","He has *taken to* going for a daily run in the morning.","take to doing sth","Theo sau là V-ing."],
+  ["take up","phr v","Start a hobby/sport; fill space/time","Bắt đầu học/chơi môn thể thao; chiếm (thời gian/diện tích)","Start, occupy","give up, drop","I decided to *take up* photography as a hobby.","take up a hobby/sport/time","Thường dùng trong Hobbies & Sports."]
+];
+
+const U4_COLLOCATIONS = [
+  ["best","n, adj","make the best of sth = tận dụng tối đa hoàn cảnh¦do your best = cố gắng hết sức mình¦the best at sth/doing = giỏi nhất về mảng nào","","Top, utmost","worst","She tried to *make the best of* a bad situation.","","Thường ám chỉ nỗ lực tối đa."],
+  ["chance","n","have/take/get a chance to do = có/nắm bắt cơ hội làm gì¦have a chance of doing = có khả năng xảy ra điều gì¦some/little chance of doing = có ít/một chút cơ hội làm gì¦take a chance (on sth) = đánh liều vào việc gì¦chance of a lifetime = cơ hội ngàn năm có một","","Opportunity, possibility","","Don't miss this *chance of a lifetime* to travel abroad.","","Bẫy giới từ: take a chance ON sth."],
+  ["go","n, v","your go = đến lượt bạn¦have a go = thử làm việc gì đó","","Turn, try, attempt","","It's *your go*, so roll the dice now.","","Dùng trong ngữ cảnh chơi board game hoặc thử sức."],
+  ["height","n","in height = chiều cao¦afraid of heights = chứng sợ độ cao¦height of sth = đỉnh cao của cái gì","","Altitude, tallness","depth","He is over two metres *in height*.","","afraid of heights luôn chia danh từ số nhiều."],
+  ["mad","adj","mad about/on sth/sb/doing = phát cuồng, vô cùng đam mê¦go/become mad = phát điên, nổi giận","","Crazy, passionate","calm, indifferent","She is completely *mad about* pop music.","","Dùng để chỉ sự hâm mộ cuồng nhiệt."],
+  ["pleasure","n","take pleasure in sth/doing = tìm thấy niềm vui trong việc gì¦gain/get pleasure from sth/doing = có được niềm vui từ việc gì","","Delight, enjoyment","displeasure","He *takes pleasure in* helping others.","","Lưu ý giới từ: IN (với take) và FROM (với get)."],
+  ["popular","adj","popular with/among sb = được yêu thích bởi một nhóm người cụ thể","","Well-liked, favorite","unpopular","This game is extremely *popular with* teenagers.","","Lưu ý: Luôn dùng 'with' hoặc 'among', không dùng 'to' hoặc 'for'."],
+  ["side","n","(on) the opposite/far side = ở phía đối diện, phía xa¦side with sb = đứng về phe/bênh vực ai¦on the winning/losing side = thuộc phe thắng/thua","","Position, team","","I will always *side with* my best friend.","","Khi dùng như động từ mang nghĩa ủng hộ."],
+  ["talent","n","have a talent (for sth/doing) = có tài năng thiên bẩm về việc gì¦talent contest = cuộc thi tìm kiếm tài năng","","Gift, ability","inability","She *has a talent for* playing the piano.","","Luôn đi kèm với giới từ 'for'."],
+  ["time","n","on time = đúng giờ¦(just) in time = vừa kịp lúc¦high/about time = đã đến lúc¦take your time (doing) = cứ thong thả¦sth takes up (your) time = chiếm thời gian¦spend time doing / on = dành thời gian¦for the time being = trong thời điểm hiện tại","","Period, moment","","It is *high time* you started studying for the exam.","","Cấu trúc ngữ pháp đặc biệt: It is high time + S + V-ed/V2."],
+  ["turn","v, n","turn (a)round/away = quay lại/quay đi¦turn sth over = lật cái gì lại¦in turn = lần lượt, kết quả là¦take turns / take it in turn(s) (to do) = thay phiên nhau làm gì¦your turn (to do) = đến lượt bạn","","Rotate, shift, order","","We *took turns* driving the car during the trip.","","Take turns luôn đi với danh từ số nhiều (turns)."]
+];
+
+const U4_WORD_PATTERNS = [
+  ["compete","compete against/with sb = Cạnh tranh/thi đấu với ai¦compete for/in sth = Thi đấu vì cái gì / trong giải gì","Players *compete against* each other for the trophy.","Dùng 'against/with' cho đối thủ, 'for' cho phần thưởng."],
+  ["concentrate","concentrate on sth/doing = Tập trung vào cái gì/việc gì","I need to *concentrate on* studying for the exam.","Luôn đi với giới từ 'on'. Đồng nghĩa với focus on."],
+  ["difficult","difficult to do = Khó để làm gì¦find sth difficult = Thấy cái gì đó khó¦find it difficult to do = Thấy khó khăn khi làm gì","I *find it difficult to* wake up early in the morning.","Cấu trúc 'find it + adj + to do' rất phổ biến."],
+  ["fond","fond of sth/sb/doing = Thích/yêu mến ai/cái gì/việc gì","My grandmother is very *fond of* gardening.","Đồng nghĩa với keen on, interested in."],
+  ["free","free to do = Tự do làm gì¦free from/of sth = Hoàn toàn không bị/thoát khỏi (cái xấu)¦free for sth = Rảnh rỗi cho cái gì","You are *free to* leave whenever you want.","'Free from' thường mang nghĩa tích cực (thoát khỏi rắc rối)."],
+  ["interested","interested in sth/doing = Quan tâm/hứng thú với cái gì/việc gì","He is *interested in* learning new foreign languages.","Lỗi thường gặp: Không dùng 'interested on' hoặc 'about'."],
+  ["involve","involve sth/doing = Bao gồm/đòi hỏi¦involved in sth/doing = Tham gia vào/dính líu tới việc gì","The job *involves* traveling around the world.","Động từ theo sau involve luôn ở dạng V-ing."],
+  ["listen","listen to sth/sb = Lắng nghe ai/cái gì","Always *listen to* your teacher's instructions carefully.","Nhớ luôn có 'to' sau listen khi có tân ngữ."],
+  ["love","love sth/sb/doing = Yêu/thích cái gì/ai/làm gì¦love to do = Yêu/thích làm việc gì","She *loves* reading fantasy novels in her free time.","Với động từ, có thể dùng V-ing hoặc To V đều được."],
+  ["mean","mean to do = Có ý định làm gì (intention)¦it/this means that… = Điều này có nghĩa là¦it/this means sth/doing = Điều này đồng nghĩa với việc","I didn't *mean to* hurt your feelings.","mean to do (có chủ ý) khác với mean doing (hệ quả)."],
+  ["prefer","prefer to do (rather than [to] do) = Thích làm gì (hơn làm gì)¦prefer sth (rather than sth) = Thích cái gì (hơn cái gì)¦prefer sth/doing (to sth/doing) = Thích cái gì (hơn cái gì)","I *prefer* drinking tea *to* coffee in the morning.","Tùy thuộc cấu trúc: prefer V-ing TO V-ing / prefer TO V RATHER THAN V."],
+  ["stop","stop sth/doing = Dừng hẳn việc đang làm¦stop to do = Dừng lại (việc hiện tại) để bắt tay vào làm việc khác¦stop sb from doing = Ngăn cản ai làm việc gì","He *stopped to* drink water before resuming his run.","Phân biệt V-ing (dừng việc đang làm) và To V (dừng để làm việc khác)."],
+  ["sure/certain","make/be sure/certain that… = Đảm bảo/chắc chắn rằng...¦sure/certain to do = Chắc chắn sẽ làm gì¦be sure/certain of sth = Chắc chắn về điều gì","Please *make sure that* all windows are locked.","'make sure' để chỉ hành động chủ động kiểm tra."]
+];
+
+/* =================== DỮ LIỆU UNIT 6: TECHNOLOGY =================== */
+const U6_VOCAB = [
+  ["artificial", "adj", "made by people, not natural", "nhân tạo", "man-made, synthetic", "natural, genuine", "These flowers are *artificial*, not real.", "artificial intelligence (AI), artificial light / flowers", "", ""],
+  ["false", "adj", "not real or true; artificial to deceive", "giả, không thật, sai", "fake, untrue, counterfeit", "true, real, genuine", "He was caught using a *false* passport at the airport.", "false teeth / passport, false impression / rumour", "", ""],
+  ["natural", "adj", "existing in nature, not made by humans", "tự nhiên, thiên nhiên", "organic, innate", "artificial, synthetic", "We should protect our *natural* environment.", "natural resources / disasters, purely natural", "innate ability: bẩm sinh", ""],
+  ["physical", "adj", "relating to things that can be seen or touched; bodily", "vật chất, thể chất", "tangible, bodily, material", "mental, spiritual, virtual", "Running improves your *physical* health.", "physical fitness / exercise, physical appearance / world", "", ""],
+  ["true", "adj", "based on facts; not invented", "đúng sự thật, thực tế", "real, genuine, factual", "false, untrue", "The movie is based on a *true* story.", "come true, true story", "factual: đúng vs thực tế", ""],
+  ["accurate", "adj", "correct in all details, free from error", "chuẩn xác, chính xác", "precise, exact, correct", "inaccurate, inexact", "Scientists need *accurate* data to draw conclusions.", "accurate calculation / measurement, highly accurate", "Accuracy (n), accurately (adv)", ""],
+  ["method", "n", "a particular way of doing sth, usually planned", "phương pháp (có hệ thống)", "procedure, technique, approach", "", "Modern teaching methods focus on student interaction.", "teaching method, traditional / scientific method", "", ""],
+  ["way", "n", "a manner, style, or method of doing sth", "cách thức, con đường", "manner, mode, style", "", "Can you show me the best *way* to solve this math problem?", "find a way to do sth, in a way, on the way", "", ""],
+  ["engine", "n", "the part of a vehicle that produces power from fuel", "động cơ (dùng nhiên liệu)", "motor, motive", "", "The car broke down because the *engine* overheated.", "start / turn off the engine, steam engine", "", ""],
+  ["machine", "n", "an apparatus using power to perform a task", "máy móc, thiết bị", "device, appliance, apparatus", "", "Put the dirty clothes into the washing *machine*.", "washing machine, vending machine", "", ""],
+  ["motor", "n", "a device that changes electricity/fuel into movement", "mô-tơ, động cơ điện", "engine, drive unit", "", "The electric *motor* runs very quietly.", "electric motor, motor vehicle", "", ""],
+  ["aim", "n", "a purpose or intention to achieve", "mục đích, mục tiêu", "goal, target, objective", "", "The main *aim* of the project is to reduce plastic waste.", "aim at / for sth, achieve an aim", "", ""],
+  ["cause", "n", "a person, event or thing that makes sth happen", "nguyên nhân (sinh ra kết quả)", "origin, root, source", "", "Careless driving is a major *cause* of traffic accidents.", "the cause of sth, cause damage / trouble", "", ""],
+  ["reason", "n", "an explanation or justification for an action", "lý do, cớ", "explanation, motive, rationale", "", "Give me one good *reason* why you were late.", "the reason for sth, reason why", "Reasonable (adj), unreasoned (adj)", ""],
+  ["estimate", "v, n", "roughly calculate or judge value/size/cost", "ước lượng, ước tính", "guess, approximate, evaluate", "", "Experts *estimate* that the repairs will take two weeks.", "estimate the cost / value, estimated time", "", ""],
+  ["calculate", "v", "find a number or answer using mathematics", "tính toán (dùng toán học)", "compute, work out, reckon", "", "Students are learning how to *calculate* the area of a circle.", "calculate the price / distance, accurately calculate", "", ""],
+  ["electric", "adj", "operated by or producing electricity", "chạy bằng điện, (thuộc) điện", "electrical, powered", "", "He bought an *electric* car to save money on petrol.", "electric guitar / car / shock / blanket", "", ""],
+  ["electronic", "adj", "having components such as microchips, circuits", "(thuộc) điện tử", "digital, computerized", "", "Tablets and smartphones are *electronic* gadgets.", "electronic device / equipment / music", "", ""],
+  ["invent", "v", "design or create something that did not exist before", "phát minh, sáng chế", "create, devise, originate", "", "Alexander Graham Bell *invented* the telephone.", "invent a new gadget / machine, invent an excuse", "", ""],
+  ["discover", "v", "find something that already exists but was unknown", "phát hiện, khám phá", "find, unearth, detect", "", "Columbus *discovered* America in 1492.", "discover a planet / cure, discover the truth", "discovery (n)", ""],
+  ["research", "n, v", "detailed study of a subject to discover new facts", "nghiên cứu chuyên sâu", "investigation, exploration, study", "", "She is doing *research* into cancer treatments.", "do / carry out research on/into sth, medical research", "Researcher (n), search (v)", ""],
+  ["experiment", "n, v", "a scientific test to see what happens or if sth is true", "cuộc thí nghiệm, thử nghiệm", "trial, test, practical test", "", "The students performed a chemistry *experiment* in the lab.", "carry out / conduct an experiment on sth, experiment with sth", "", ""],
+  ["progress", "n, v", "movement forward; development toward a goal", "sự tiến bộ, tiến trình", "advancement, headway, improvement", "regression, decline", "Her English has shown remarkable *progress* this semester.", "make progress, in progress", "Proccess", ""],
+  ["development", "n", "the process of growing, changing, or becoming more advanced", "sự phát triển", "growth, expansion, evolution", "stagnation, decay", "The *development* of AI is transforming many industries.", "economic / technological development, under development", "", ""],
+  ["modern", "adj", "relating to the present or recent times", "hiện đại, tối tân", "contemporary, state-of-the-art", "ancient, traditional, archaic", "*Modern* technology makes our lives much easier.", "modern society / technology, modern art", "", ""],
+  ["new", "adj", "recently made, built, invented or introduced", "mới tinh, vừa mới", "fresh, brand-new, novel", "old, second-hand", "I need to buy a *new* pair of shoes.", "brand new, new ideas", "", ""],
+  ["industry", "n", "the production of goods in factories; a specific business branch", "nền công nghiệp, ngành nghề", "manufacturing, trade, sector", "", "The automobile *industry* creates thousands of jobs.", "tourist / car industry, heavy industry", "", ""],
+  ["factory", "n", "a building or group of buildings where goods are manufactured", "nhà máy, phân xưởng", "plant, mill, workshop", "", "My uncle works as an engineer in a shoe *factory*.", "work in a factory, car / textile factory", "", ""],
+  ["award", "n", "a prize given to sb for an outstanding achievement", "giải thưởng, cúp", "prize, trophy, medal", "", "She won an *award* for best actress.", "win / receive an award, academy award", "", ""],
+  ["reward", "n", "sth given in recognition of service, effort or good deed", "tiền thưởng, phần thưởng đền đáp", "prize, bonus, payoff", "", "The police offered a cash *reward* for information.", "as a reward for sth, offer a reward", "", ""],
+  ["take place", "phr v", "to happen or occur, especially after being planned", "diễn ra (có sắp xếp trước)", "occur, happen, be held", "", "The Olympic Games *take place* every four years.", "take place in / on, scheduled to take place", "", ""],
+  ["occur", "v", "to happen unexpectedly or naturally", "xảy ra, xuất hiện bất ngờ", "happen, transpire, crop up", "", "An unexpected error *occurred* while saving the file.", "occur suddenly, it occurs to sb that...", "", ""]
+];
+
+const U6_PHRASAL_VERBS = [
+  ["break down", "phr v", "stop working (for a machine, car, etc.)", "hỏng hóc, ngưng hoạt động", "stop functioning, fail", "work, run smoothly", "Our car *broke down* on the way to the airport.", "break down on the motorway", ""],
+  ["carry out", "phr v", "perform or complete an experiment, test, order", "tiến hành, thực hiện", "conduct, execute, perform", "", "Scientists are *carrying out* tests on the new drug.", "carry out an experiment / research / investigation", ""],
+  ["come off", "phr v", "succeed; achieve the intended result", "thành công", "succeed, pay off", "fail, fall through", "The bold marketing plan actually *came off*.", "the plan / deal comes off", ""],
+  ["come on", "phr v", "develop or make progress", "tiến bộ, tiến triển", "progress, improve, advance", "", "Her English is *coming on* very well this year.", "come on well / along", ""],
+  ["come up with", "phr v", "think of an idea, a plan, or a solution", "nảy ra, nghĩ ra (ý tưởng)", "devise, produce, brainstorm", "", "Who *came up with* the idea for this app?", "come up with an idea / answer / plan", ""],
+  ["cut off", "phr v", "stop the supply of sth (water, power, etc.)", "cắt nguồn cung cấp, ngắt kết nối", "disconnect, interrupt, sever", "", "The company threatened to *cut off* our electricity.", "cut off power / electricity / water supply", ""],
+  ["find out", "phr v", "discover or learn information", "tìm ra thông tin, phát hiện", "discover, learn, ascertain", "", "I must *find out* what time the train arrives.", "find out the truth / facts", ""],
+  ["give off", "phr v", "produce or emit heat, light, smell, gas", "tỏa ra, phát ra (mùi, nhiệt, khí...)", "emit, release, send out", "", "The rotten meat *gives off* an awful smell.", "give off a bad smell / toxic fumes", ""],
+  ["narrow down", "phr v", "reduce the number of possibilities or choices", "thu hẹp (phạm vi, lựa chọn)", "reduce, limit, restrict", "broaden, expand", "We managed to *narrow down* the choices to two.", "narrow down the list / suspects / options", ""],
+  ["plug in", "phr v", "connect to the electricity supply", "cắm điện", "connect to power", "unplug", "Is the printer *plugged in*?", "plug the charger / cord in", ""],
+  ["put through", "phr v", "connect somebody by phone", "nối máy điện thoại", "connect by phone", "", "Hold the line, I'll *put* you *through* to the manager.", "put sb through to sb", ""],
+  ["turn into", "phr v", "change or transform into something different", "biến thành, chuyển thành", "transform into, convert into", "", "Water *turns into* ice when it freezes.", "turn caterpillars into butterflies", ""],
+  ["turn off", "phr v", "stop a machine or appliance working", "tắt máy, tắt nguồn", "switch off, shut down", "turn on, switch on", "Remember to *turn off* the computer before leaving.", "turn off the lights / engine / computer", ""],
+  ["work out", "phr v", "find the solution to a problem, calculate", "tìm ra cách giải quyết, tính toán ra", "solve, figure out, resolve", "", "I can't *work out* this difficult math puzzle.", "work out the answer / the cost", ""]
+];
+
+const U6_COLLOCATIONS = [
+  ["attempt", "n", "make an attempt (at sth / doing / to do) = cố gắng, nỗ lực làm gì", "", "try, make an effort, strive", "", "He *made an attempt* to fix the computer himself.", "in an attempt to do sth", ""],
+  ["average", "n", "on average = tính trung bình", "", "typically, generally", "", "*On average*, people check their phones 80 times a day.", "spend X hours on average", ""],
+  ["beginning", "n", "in the beginning = lúc ban đầu¦at the beginning of sth = ở điểm bắt đầu của cái gì", "", "initially, at first", "in the end, finally", "*In the beginning*, learning a coding language is tough.", "at the beginning of the year / book", ""],
+  ["bottom", "n", "at/on the bottom (of sth) = ở dưới đáy / phần dưới cùng", "", "", "at the top of", "Write your signature *at the bottom of* the form.", "sign at the bottom of the page", ""],
+  ["cause", "n", "the cause of sth = nguyên nhân của cái gì", "", "reason for, source of", "", "Doctors are trying to find *the cause of* the disease.", "find / look for the cause of sth", ""],
+  ["conclusion", "n", "come to / reach the conclusion (that) = đi đến kết luận rằng", "", "conclude, deduce", "", "We *reached the conclusion that* the plan was unfeasible.", "in conclusion", ""],
+  ["experiment", "n", "do / perform / carry out an experiment = tiến hành cuộc thử nghiệm/thí nghiệm", "", "conduct an experiment", "", "The class *carried out an experiment* in chemistry.", "experiment with sth/doing", ""],
+  ["fact", "n", "in fact / as a matter of fact = trên thực tế, thực ra là", "", "actually, in reality", "", "*In fact*, electric vehicles are not a recent invention.", "the fact of the matter is that¦face the facts", ""],
+  ["introduction", "n", "with the introduction of sth = với sự ra đời / xuất hiện của", "", "with the advent / arrival of", "", "*With the introduction of* smartphones, communication changed.", "an introduction to sth/sb", ""],
+  ["phone call", "n", "make / receive / get a phone call = gọi hoặc nhận cuộc gọi điện thoại", "", "call sb, dial sb", "", "Excuse me, I need to *make* an urgent *phone call*.", "make a quick phone call", ""],
+  ["photo", "n", "take a photo (of sth/sb) = chụp ảnh ai / cái gì", "", "snap a picture", "", "Can you *take a photo* of us in front of the lab?", "take photos of the scenery", ""],
+  ["research", "n", "carry out / do research (on/into sth) = tiến hành nghiên cứu về đề tài gì", "", "conduct research", "", "They are *doing research into* artificial intelligence.", "scientific / market research", ""]
+];
+
+const U6_WORD_PATTERNS = [
+  ["cause", "cause sth (to do) = khiến cái gì/ai làm điều gì", "The ice on the road *caused* the driver *to* lose control.", "cause sb trouble / damage"],
+  ["consider", "consider sth / doing = cân nhắc làm gì¦consider sb for sth = xem xét ai cho vị trí nào¦consider it strange (for sb to do) = coi điều gì là kì lạ", "Have you *considered studying* computer science?", "consider if / whether¦consider sb as sth"],
+  ["discuss", "discuss sth / doing (with sb) = thảo luận điều gì với ai", "We need to *discuss buying* a new server with the boss.", "Không dùng discuss about"],
+  ["explain", "explain that / explain sth (to sb) = giải thích rằng / giải thích điều gì cho ai", "The teacher *explained* the formula *to* the students.", "Cần có 'to sb' trước tân ngữ chỉ người"],
+  ["intend", "intend to do / doing = dự định làm gì", "I *intend to upgrade* my laptop next week.", "have no intention of doing"],
+  ["know", "know (about) sth/doing = biết về¦know of sb = biết danh ai¦be known as sth = được biết đến như là", "Thomas Edison is *known as* a brilliant inventor.", "know by heart¦widely known as"],
+  ["look", "look at / for sth/sb = nhìn vào; tìm kiếm¦look forward to sth/doing = mong chờ", "I am *looking forward to receiving* the exam results.", "look forward to hearing from you"],
+  ["manage", "manage to do = xoay xở làm được việc gì", "Despite the power cut, he *managed to save* his file.", "Syn: succeed in doing"],
+  ["plan", "plan sth / plan to do = lên kế hoạch làm việc gì", "The team *plans to launch* the application this winter.", "make a plan"],
+  ["possible", "possible (for sb) to do = có thể cho ai làm gì¦find sth possible / find it impossible to do = thấy điều gì là khả thi/bất khả thi", "Modern tech makes it *possible for* us *to work* from home.", "make it possible for sb"],
+  ["result", "result of sth/doing = kết quả của¦result in sth = dẫn đến¦result from sth = xuất phát/do từ¦as a result of sth = do từ", "Smoking *results in* serious lung damage.", "result in = cause¦result from = be caused by"],
+  ["wonder", "wonder about sth/doing = băn khoăn về cái gì¦wonder if / whether / why = tự hỏi liệu có...", "I *wonder whether* robots will completely replace human workers.", "I wonder if..."]
+];
+
+/* =================== DỮ LIỆU UNIT 8: MEDIA & COMMUNICATION =================== */
+const U8_VOCAB = [
+  ["agree", "v", "Have the same opinion or accept a suggestion.", "đồng ý", "concur", "disagree", "We agree on most things.", "agree with sb, agree to do sth.", "agree thiên về sự hợp ý kiến; accept thiên về sự chấp nhận sự vật hoặc đề nghị.", "/əˈɡriː/"],
+  ["accept", "v", "Take or receive something offered, or agree to something.", "chấp nhận", "receive, admit", "reject", "He accepted the job offer.", "accept an offer, accept the truth", "accept dùng khi nhận cái gì hoặc đồng ý với điều gì được đưa ra.", "/əkˈsept/"],
+  ["headline", "n", "The main title of a newspaper article or news story.", "tiêu đề lớn trên báo", "front-page news", "", "The scandal made front-page headlines.", "hit the headlines, a catchy headline", "headline dùng cho tiêu đề báo, thu hút sự chú ý.", "/ˈhedlaɪn/"],
+  ["heading", "n", "The title of a section or smaller part of a text.", "tiêu đề mục", "title", "", "Look for the information under the heading 'Finance'.", "under the heading", "heading dùng để tổ chức văn bản, sách hoặc tài liệu.", "/ˈhedɪŋ/"],
+  ["feature", "n", "A special article or report about a person, topic, or issue.", "bài viết đặc biệt / chuyên đề", "special, piece", "", "The magazine ran a feature on eco-tourism.", "a regular feature, a feature on sb/sth", "feature mang tính giải trí, phân tích sâu hơn article.", "/ˈfiːtʃər/"],
+  ["article", "n", "A piece of writing in a newspaper, magazine, or website.", "bài báo / bài viết", "text, report", "", "I read an interesting article about health.", "publish an article", "article là bài viết nói chung, không nhất thiết sâu như feature.", "/ˈɑːrtɪkəl/"],
+  ["talk show", "n", "A television or radio program in which people talk or discuss a topic.", "chương trình trò chuyện / phỏng vấn", "", "", "She was invited as a guest on a late-night talk show.", "host a show, appear on a show", "talk show dành cho thảo luận, phỏng vấn, trao đổi.", "/tɔːk ʃəʊ/"],
+  ["quiz show", "n", "A game show involving questions and answers.", "chương trình đố vui", "", "", "The quiz show was very popular last year.", "watch a quiz show", "quiz show là trò chơi kiến thức.", "/kwɪz ʃəʊ/"],
+  ["game show", "n", "A television program where contestants play games for prizes.", "chương trình trò chơi truyền hình", "", "", "The audience loves the new game show.", "take part in a game show", "game show tập trung vào trò chơi, giải thưởng.", "/ɡeɪm ʃəʊ/"],
+  ["announcer", "n", "A person who introduces a program or reads news.", "người dẫn chương trình / người đọc thông tin", "presenter, anchor", "", "The announcer introduced the next guest.", "continuity announcer", "announcer mang tính thông tin khách quan.", "/əˈnaʊnsər/"],
+  ["commentator", "n", "A person who gives opinions and analysis, especially in sport or politics.", "bình luận viên", "analyst, pundit", "", "The commentator analyzed the football match.", "sports commentator", "commentator đưa ra nhận xét, phân tích.", "/ˈkɒmənteɪtər/"],
+  ["journalist", "n", "A person whose job is to collect and write news for newspapers or media.", "nhà báo / phóng viên", "reporter", "", "The journalist exposed the corruption.", "investigative journalist", "journalist là người làm báo nói chung.", "/ˈdʒɜːrnəlɪst/"],
+  ["columnist", "n", "A writer of a regular newspaper or magazine column with opinions.", "người viết chuyên mục / cột báo", "opinion writer", "", "She is a weekly columnist for the Times.", "gossip columnist", "columnist tập trung vào quan điểm, chuyên mục riêng.", "/ˈkɒləmnɪst/"],
+  ["press", "n", "Newspapers and magazines, or the activity of reporting news.", "báo chí", "newspapers", "", "The press heavily criticized the mayor.", "freedom of the press, local press", "press là báo chí nói chung, có tính rộng hơn media.", "/pres/"],
+  ["media", "n", "The means of communication such as television, radio, newspapers, and the internet.", "phương tiện truyền thông / truyền thông đại chúng", "mass media", "", "The media plays a huge role in elections.", "social media, media coverage", "media là thuật ngữ rộng hơn, bao gồm press và nhiều kênh khác.", "/ˈmiːdiə/"],
+  ["programme", "n", "A broadcast or planned series of events; British English.", "chương trình", "", "", "I watched a documentary programme last night.", "TV programme, radio programme", "programme là Anh Anh; program là Anh Mỹ.", "/ˈprəʊɡræm/"],
+  ["program", "n", "A planned event or a computer program; American English.", "chương trình / chương trình máy tính", "", "", "The school has a new educational program.", "computer program, training program", "program thường dùng trong Anh Mỹ hoặc trong máy tính.", "/ˈproʊɡræm/"],
+  ["channel", "n", "A television or radio station or frequency.", "kênh truyền hình / radio", "station", "", "What channel is the news on?", "change the channel", "channel là nền tảng cố định; broadcast là nội dung được phát đi.", "/ˈtʃænəl/"],
+  ["broadcast", "n", "A radio or television transmission.", "buổi phát sóng / chương trình phát sóng", "transmission, show", "", "We interrupted this broadcast for a newsflash.", "live broadcast", "broadcast nhấn mạnh sự phát sóng của nội dung.", "/ˈbrɔːdkæst/"],
+  ["bulletin", "n", "A short news report or summary.", "bản tin", "report, statement", "", "Here is the latest news bulletin.", "news bulletin", "bulletin là bản tin tổng hợp, thường theo kỳ.", "/ˈbʊlɪtɪn/"],
+  ["newsflash", "n", "A sudden report of important news, interrupting a program.", "tin khẩn cấp / tin nóng", "breaking news", "", "A newsflash just reported a major earthquake.", "interrupt for a newsflash", "newsflash mang tính khẩn cấp, bất ngờ hơn bulletin.", "/ˈnjuːzflæʃ/"]
+];
+
+const U8_PHRASAL_VERBS = [
+  ["bring up", "phr v", "Start discussing a subject.", "bắt đầu thảo luận về một chủ đề", "raise, introduce", "", "She brought up the issue of salary during the meeting.", "bring up a matter/subject", "Thường dùng khi chủ động đề cập đến một vấn đề cần giải quyết.", ""],
+  ["come on", "phr v", "Start to be broadcast or begin.", "bắt đầu được phát sóng", "begin broadcasting", "", "What time does the football match come on?", "a show comes on", "Informal, dùng trong giao tiếp hằng ngày khi nói về lịch phát sóng TV/Radio.", ""],
+  ["fill in", "phr v", "Write information in the spaces on a form or document.", "điền thông tin vào chỗ trống", "complete, fill out", "", "Please fill in your name and address here.", "fill in a form, fill in a blank", "Thường dùng trong các thủ tục giấy tờ, hành chính.", ""],
+  ["go into", "phr v", "Deal with something in detail.", "đi sâu vào chi tiết", "examine, investigate", "", "We don't have time to go into that right now.", "go into details, go into the matter", "Dùng khi học thuật hoặc thảo luận chuyên sâu.", ""],
+  ["hand out", "phr v", "Give something to people in a group.", "phân phát", "distribute, pass out", "", "The teacher handed out the test papers.", "hand out leaflets, hand out worksheets", "Mang tính vật lý: chia sẻ hoặc phát tài liệu trực tiếp.", ""],
+  ["look up", "phr v", "Try to find information in a book, list, or database.", "tra cứu thông tin", "search for, check", "", "If you don't know the word, look it up in a dictionary.", "look up a word/number", "Nhấn mạnh việc tìm kiếm thông tin có sẵn.", ""],
+  ["make up", "phr v", "Invent an explanation or story; create something.", "bịa ra / sáng tác", "invent, fabricate", "", "He made up a ridiculous excuse for being late.", "make up an excuse, make up a story", "Có thể mang nghĩa tiêu cực (nói dối) hoặc tích cực (sáng tác).", ""],
+  ["put forward", "phr v", "Suggest an idea or plan.", "đề xuất / nêu ý kiến", "propose, suggest", "", "The committee put forward a new plan to reduce waste.", "put forward a proposal, put forward a theory", "Trang trọng, dùng nhiều trong công việc, hội họp, học thuật.", ""],
+  ["stand out", "phr v", "Be easy to see or notice because of being different.", "nổi bật / dễ thấy", "be prominent, catch the eye", "blend in", "Her bright red coat made her stand out in the crowd.", "stand out from the crowd", "Nhấn mạnh sự khác biệt tích cực về ngoại hình hoặc tài năng.", ""],
+  ["turn over", "phr v", "Turn a page to the other side.", "lật trang", "flip", "", "Please turn over the exam paper and begin.", "turn over the page", "Chỉ hành động vật lý lật trang sách, báo, đề thi.", ""]
+];
+
+const U8_COLLOCATIONS = [
+  ["control", "n", "in control (of sth); take control (of sth); under control; under the control of sb; out of control", "kiểm soát / quyền kiểm soát", "", "", "", "The situation is completely out of control.", "", ""],
+  ["description", "n", "give a description of sth/sb", "mô tả", "", "", "", "The witness gave a detailed description of the suspect.", "", ""],
+  ["difference", "n", "make a difference (to sth/sb); tell the difference (between); there's no/some/little difference between", "sự khác biệt", "", "", "", "Can you tell the difference between these two images?", "", ""],
+  ["Internet", "n", "on the Internet; over the Internet; surf the Internet", "Internet / mạng internet", "", "", "", "I found this information on the Internet.", "", ""],
+  ["news", "n", "in the news; on the news; hear the news; newsflash; newspaper", "tin tức", "", "", "", "Did you hear the news about the stock market?", "", ""],
+  ["place", "n", "take place; in place of; at a place", "địa điểm / sự kiện diễn ra", "", "", "", "The concert will take place tomorrow evening.", "", ""],
+  ["question", "n", "ask/answer a question; question sth/sb; in question", "câu hỏi / vấn đề", "", "", "", "The validity of the document is in question.", "", ""],
+  ["view", "n", "have/hold/take a view; be sb's view that; in my view; in view of; look at/see the view; view of sth; view from sth/swh", "quan điểm / góc nhìn", "", "", "", "In my view, we should delay the broadcast.", "", ""],
+  ["watch", "v", "watch sth/sb; watch (out) for sth/sb; keep watch", "theo dõi / xem / canh chừng", "", "", "", "The security guard will keep watch all night.", "", ""]
+];
+
+const U8_WORD_PATTERNS = [
+  ["according", "according to sb = theo lời ai", "According to the report, sales have increased.", "Dùng khi nêu nguồn thông tin hoặc căn cứ."],
+  ["announce", "announce sth (to sb); announce that = thông báo rằng", "They announced that the flight was delayed.", "announce có thể đi với tân ngữ trực tiếp hoặc mệnh đề that."],
+  ["believe", "believe sth; believe in sth; believe that; believe to be", "I believe in freedom of speech.", "believe in = tin vào, believe sth = tin điều gì."],
+  ["comment", "comment on sth; make a comment (to sb) about sth", "The politician refused to comment on the scandal.", "comment on thường đi với chủ đề, sự kiện."],
+  ["correspond", "correspond with sth/sb = tương ứng với", "The translated text does not correspond with the original.", "Nhấn mạnh sự phù hợp hoặc tương ứng."],
+  ["describe", "describe sth/sb as; describe sth/sb to sb", "She described him as a dedicated worker.", "describe as = mô tả như thế nào."],
+  ["hear", "hear sth/sb; hear about sth/sb; hear from sb", "I was shocked to hear about the accident.", "hear about = được nghe về một sự việc."],
+  ["inform", "inform sb that; inform sb about/of sth", "Please inform us of any changes to your schedule.", "inform sb of/about = thông báo cho ai về điều gì."],
+  ["likely", "likely to do; likely that", "It is highly likely that it will rain tomorrow.", "likely thường dùng ở dạng it is likely that..."],
+  ["point", "there's no point in doing = không có ích khi làm gì", "There's no point in arguing over this.", "point in V-ing dùng khi nói về sự vô ích."],
+  ["send", "send sb sth; send sth (to sb)", "Please send the report to my email.", "Dùng send + object + to/for + person."],
+  ["surprise", "by surprise; surprised at/by sth", "His sudden resignation took us all by surprise.", "take sb by surprise = làm ai bất ngờ."],
+  ["tell", "tell sb sth; tell sb that; tell sb about/of sth/doing; tell sb (not) to do", "She told me to wait here.", "tell sb to do = ra lệnh / bảo ai làm gì."]
+];
+
+const U8_WORD_FORMATION = [
+  ["announce", "announcement, (un)announced", "announcement (n): bản thông báo; unannounced (adj): không được báo trước", ""],
+  ["edit", "editor, editorial, edited", "editor (n): biên tập viên; editorial (n/adj): bài xã luận / thuộc về biên tập; edited (adj): đã được chỉnh sửa", ""],
+  ["power", "powerful, powerless, empower", "powerful (adj): mạnh mẽ; powerless (adj): bất lực; empower (v): trao quyền", ""],
+  ["belief", "disbelief, believe, (un)believable", "disbelief (n): sự hoài nghi; unbelievable (adj): không thể tin được", ""],
+  ["communicate", "communication, (un)communicative, communicator", "communication (n): sự giao tiếp; communicator (n): người giao tiếp; uncommunicative (adj): ít cởi mở", ""],
+  ["convince", "convinced, (un)convincing", "convinced (adj): tin chắc; unconvincing (adj): không thuyết phục", ""],
+  ["discuss", "discussion", "discussion (n): cuộc thảo luận", ""],
+  ["humour", "humorous, humourless", "humorous (adj): hài hước; humourless (adj): thiếu khiếu hài hước", ""],
+  ["inform", "information, (un)informed, (un)informative", "information (n): thông tin; uninformed (adj): không được thông tin; uninformative (adj): không mang lại nhiều thông tin", ""],
+  ["journal", "journalist, journalism, journalistic", "journalist (n): nhà báo; journalism (n): ngành báo chí; journalistic (adj): thuộc về báo chí", ""],
+  ["politics", "political, politician", "political (adj): thuộc chính trị; politician (n): chính trị gia", ""],
+  ["ridicule", "ridiculous, ridiculousness", "ridiculous (adj): ngớ ngẩn, vô lý; ridiculousness (n): sự ngớ ngẩn", ""],
+  ["second", "secondly, secondary", "secondly (adv): thứ hai; secondary (adj): thứ yếu, cấp hai", ""],
+  ["write", "writer, writing, wrote, (un)written", "writer (n): nhà văn; writing (n): bài viết; unwritten (adj): chưa được viết ra", ""]
+];
+
+/* =================== DỮ LIỆU UNIT 10: PEOPLE & SOCIETY =================== */
+const U10_VOCAB = [
+  ["relationship", "n", "A connection between people, groups, or countries.", "mối quan hệ", "bond, association", "", "We have a good working *relationship*.", "build a relationship, a strong relationship", "Thường nói về tương tác xã hội hoặc tình cảm có chiều sâu.", "/rɪˈleɪʃnʃɪp/"],
+  ["connection", "n", "A link between things, events, or people; a means of communication.", "sự kết nối, mối liên hệ", "link, tie", "", "Is there a *connection* between the two crimes?", "a strong connection, a connection between A and B", "Thiên về sự liên kết vật lý, logic hoặc liên lạc.", "/kəˈnekʃn/"],
+  ["blame", "n, v", "Responsibility for something wrong; to say someone is responsible.", "sự đổ lỗi; đổ lỗi", "accusation", "praise", "Don't put the *blame* on me.", "lay the blame on sb, take the blame", "Tập trung vào việc quy trách nhiệm cho một sai lầm.", "/bleɪm/"],
+  ["fault", "n", "A mistake, defect, or responsibility for a bad result.", "lỗi lầm, khuyết điểm; trách nhiệm", "error, defect", "", "It's my *fault* that we are late.", "be sb's fault, find fault with sb/sth", "Nhấn mạnh bản thân lỗi lầm hoặc khuyết điểm.", "/fɔːlt/"],
+  ["crowd", "n", "A large group of people gathered together, often without organisation.", "đám đông", "mob, mass", "", "A large *crowd* gathered in the square.", "attract a large crowd, a crowd of people", "Thường là nhóm người tụ tập tự phát, không cùng hướng chú ý.", "/kraʊd/"],
+  ["audience", "n", "A group of people watching or listening to a performance or programme.", "khán giả, thính giả", "spectators, viewers", "", "The *audience* clapped at the end of the play.", "a captive audience, a television audience", "Nhóm người có tổ chức, cùng hướng sự chú ý vào chương trình hoặc sự kiện.", "/ˈɔːdiəns/"],
+  ["sympathetic", "adj", "Showing that you understand and care about someone's feelings.", "đồng cảm, cảm thông", "compassionate", "indifferent", "She was very *sympathetic* when I was ill.", "sympathetic to/towards sb", "Thể hiện thái độ cảm thông với hoàn cảnh của người khác.", "/ˌsɪmpəˈθetɪk/"],
+  ["likeable", "adj", "Having qualities that make people like you.", "dễ mến", "friendly", "obnoxious", "He is a very *likeable* young man.", "a likeable personality", "Mô tả tính cách khiến người khác có thiện cảm.", "/ˈlaɪkəbl/"],
+  ["popular", "adj", "Liked, admired, or enjoyed by many people.", "phổ biến, được yêu thích", "well-liked", "unpopular", "This song is highly *popular* among teens.", "popular with/among sb", "Mang nghĩa tích cực: được nhiều người yêu thích.", "/ˈpɒpjələ(r)/"],
+  ["famous", "adj", "Known about by many people, often because of achievement or publicity.", "nổi tiếng", "well-known, renowned", "", "Paris is *famous* for its art museums.", "famous for sth, famous as sth", "Chỉ mức độ được nhiều người biết đến; không nhất thiết được yêu thích.", "/ˈfeɪməs/"],
+  ["unknown", "adj", "Not known or familiar to people.", "vô danh, không được biết đến", "obscure", "familiar", "The author of the poem remains *unknown*.", "an unknown artist, remain unknown", "Trung tính, chỉ việc chưa được biết đến.", "/ˌʌnˈnəʊn/"],
+  ["infamous", "adj", "Well-known for something bad or harmful.", "khét tiếng", "notorious", "", "He was an *infamous* dictator.", "an infamous criminal, infamous for sth", "Mang sắc thái tiêu cực: nổi danh vì hành vi xấu.", "/ˈɪnfəməs/"]
+];
+
+const U10_PHRASAL_VERBS = [
+  ["ask after", "phr v", "Ask for news about someone.", "hỏi thăm tin tức về ai", "inquire about", "", "Tell your mother I was *asking after* her.", "ask after sb's health", "Informal; thể hiện sự quan tâm thân tình.", ""],
+  ["bring up", "phr v", "Look after a child until they become an adult.", "nuôi dưỡng trẻ đến khi trưởng thành", "raise, rear", "", "She was *brought up* by her grandparents.", "be brought up to do sth, bring up a child", "Thường nói về quá trình nuôi dạy và hoàn cảnh gia đình.", ""],
+  ["fall for", "phr v", "Fall in love with someone; or believe a lie or trick.", "phải lòng ai; mắc lừa", "be smitten; be deceived by", "", "He *fell for* her immediately. / I can't believe you *fell for* that excuse.", "fall for sb, fall for a trick", "Hai nghĩa đều phổ biến trong văn nói.", ""],
+  ["fall out (with)", "phr v", "Have an argument with someone and stop being friends.", "cãi vã và nghỉ chơi với ai", "quarrel, clash", "make up", "He left home after *falling out with* his parents.", "fall out with sb over sth", "Nhấn mạnh sự rạn nứt trong một mối quan hệ thân thiết.", ""],
+  ["get on (with)", "phr v", "Have a good relationship with someone.", "có mối quan hệ tốt với ai", "get along with", "", "She doesn't *get on with* her new boss.", "get on well with sb", "Trung tính, dùng được trong nhiều ngữ cảnh giao tiếp.", ""],
+  ["grow up", "phr v", "Become older and more mature.", "lớn lên, trưởng thành", "mature", "", "I *grew up* in a small village.", "grow up in a place", "Nói về quá trình phát triển thể chất và tinh thần.", ""],
+  ["look down on", "phr v", "Think that you are better than someone.", "khinh thường", "despise", "look up to", "She *looks down on* people who haven't been to college.", "look down on sb", "Mang sắc thái kiêu ngạo, đánh giá thấp người khác.", ""],
+  ["look up to", "phr v", "Admire and respect someone.", "kính trọng, ngưỡng mộ", "respect, idolize", "look down on", "He always *looked up to* his older brother.", "look up to a role model", "Thể hiện sự tôn trọng với người có thành tựu hoặc kinh nghiệm.", ""],
+  ["make up", "phr v", "Become friends again after an argument.", "làm hòa", "reconcile", "fall out", "They argued but later *made up*.", "make up with sb", "Informal; thường dùng với bạn bè hoặc người thân.", ""],
+  ["pass away", "phr v", "Die.", "qua đời", "pass on, die", "", "His grandmother *passed away* last night.", "pass away peacefully", "Lối nói giảm nói tránh, lịch sự hơn die.", ""],
+  ["pick on", "phr v", "Keep treating someone badly or unfairly.", "bắt nạt, đối xử tệ lặp đi lặp lại", "bully, tease", "", "The older kids always *pick on* him.", "pick on sb smaller/weaker", "Mang nghĩa tiêu cực, thường chỉ việc ăn hiếp người yếu thế.", ""],
+  ["put down", "phr v", "Criticise someone and make them feel stupid.", "chỉ trích, làm ai bẽ mặt", "humiliate, belittle", "", "Why do you always have to *put me down*?", "put sb down in front of others", "Lời nói hạ thấp người khác, gây tổn thương tinh thần.", ""],
+  ["settle down", "phr v", "Become calm; or establish a stable life, often by marrying or staying in one place.", "bình tĩnh lại; ổn định cuộc sống", "calm down, establish oneself", "", "The kids finally *settled down*. / They decided to *settle down* in the countryside.", "settle down and start a family, settle down in a place", "Có thể chỉ sự bình tĩnh hoặc một cột mốc ổn định trong cuộc đời.", ""],
+  ["stand up for", "phr v", "Support or defend someone or something in an argument or fight.", "bênh vực, bảo vệ", "defend, champion", "", "You need to *stand up for* yourself.", "stand up for your rights/yourself", "Thể hiện sự dũng cảm, bảo vệ bản thân hoặc lẽ phải.", ""],
+  ["take aback", "phr v", "Surprise someone so much that they do not know how to react.", "làm ngạc nhiên, sững sờ", "startle, stun", "", "I was entirely *taken aback* by his aggressive reaction.", "be taken aback by sth", "Thường dùng ở dạng bị động, nhấn mạnh sự bất ngờ khiến ai bối rối.", ""]
+];
+
+const U10_PATTERNS = [
+  ["approval", "show/give (your) approval of/for sth¦meet with sb's approval", "Does the plan meet with your approval?", "Trang trọng; thường nói về việc nhận được sự đồng ý."],
+  ["care", "take care of sth/sb¦care for/about sth/sb", "She cares deeply about environmental issues.", "Care for có thể mang nghĩa chăm sóc; care about nhấn mạnh sự quan tâm."],
+  ["dream", "have a dream about sth/sb/doing¦daydream¦dream of/about doing", "He dreams of becoming a successful pilot.", "Dream of/about doing diễn tả khát vọng hoặc mơ về việc gì."],
+  ["favour", "do/owe sb a favour¦be in favour of sth", "I am completely in favour of the new law.", "In favour of nghĩa là ủng hộ điều gì."],
+  ["mood", "in a good/bad mood¦in the right/wrong mood¦in the mood for sth", "I'm not in the mood for jokes right now.", "Diễn tả tâm trạng tại một thời điểm."],
+  ["agree", "agree with/on/to sth¦agree with sb¦agree to do¦agree that", "We finally agreed on a date for the meeting.", "Chọn giới từ theo đối tượng hoặc nội dung đồng ý."],
+  ["approve", "approve of sth/doing¦approve sth", "My parents don't approve of my leaving school.", "Approve of diễn tả tán thành; approve sth có thể mang nghĩa chính thức thông qua."],
+  ["attack", "attack sth¦attack sb for sth/doing¦an attack on sth/sb", "The media attacked him for his careless comments.", "Dùng for khi nêu lý do tấn công hoặc chỉ trích."],
+  ["convince", "convince sb (of sth)¦convince sb to do¦convince sb that", "I managed to convince him that it was safe.", "Các cấu trúc thường gặp: convince someone of something hoặc convince someone to do something."],
+  ["force", "force sb to do sth¦force sb into sth/doing", "They forced her into signing the contract.", "Nhấn mạnh sự ép buộc, thiếu tự nguyện."],
+  ["pretend", "pretend to be¦pretend to do¦pretend that", "He pretended to be asleep when I walked in.", "Dùng để nói về việc giả vờ hoặc làm như thể điều gì là thật."],
+  ["rely", "rely on sth/sb", "You can always rely on me for help.", "Đồng nghĩa với depend on."]
+];
+
+const U10_WORD_FORMATION = [
+  ["able", "unable (adj)¦(in)ability (n)¦disabled (adj)¦disability (n)", "unable: không thể; ability: khả năng; disabled: khuyết tật; disability: tình trạng khuyết tật", ""],
+  ["achieve", "achievement (n)", "achievement: thành tựu, thành tích", ""],
+  ["argue", "argument (n)¦argumentative (adj)", "argument: cuộc tranh cãi; argumentative: hay tranh cãi", "Argumentative thường mang nghĩa thích cự cãi."],
+  ["care", "careful (adj)¦carefully (adv)¦careless (adj)¦carelessly (adv)¦(un)caring (adj)", "careful: cẩn thận; careless: bất cẩn; caring: biết quan tâm", ""],
+  ["happy", "unhappy (adj)¦(un)happiness (n)¦(un)happily (adv)", "unhappy: không vui; happiness: hạnh phúc; happily: vui vẻ", ""],
+  ["jealous", "jealousy (n)¦jealously (adv)", "jealousy: sự ghen tị; jealously: một cách ghen tị", ""],
+  ["kind", "unkind (adj)¦(un)kindness (n)¦kindly (adv)", "unkind: không tử tế; kindness: lòng tốt; kindly: tử tế", ""],
+  ["marry", "marriage (n)¦(un)married (adj)", "marriage: hôn nhân; married: đã kết hôn; unmarried: chưa kết hôn", ""],
+  ["obey", "disobey (v)¦(dis)obedient (adj)¦(dis)obediently (adv)¦(dis)obedience (n)", "disobey: không vâng lời; obedient: biết vâng lời; obedience: sự vâng lời", ""],
+  ["person", "(im)personal (adj)¦(im)personally (adv)¦personality (n)", "personal: cá nhân; impersonal: không mang tính cá nhân; personality: tính cách", ""],
+  ["polite", "impolite (adj)¦(im)politely (adv)¦(im)politeness (n)", "polite: lịch sự; impolite: bất lịch sự; politeness: phép lịch sự", ""],
+  ["relate", "relative (adj/n)¦relatively (adv)¦relation (n)¦relationship (n)", "relative: họ hàng / tương đối; relation: mối liên hệ; relationship: mối quan hệ", ""],
+  ["correspond", "correspondence (n)", "correspondence: sự tương ứng; thư từ trao đổi", ""],
+  ["friend", "friendship (n)¦(un)friendly (adj)", "friendship: tình bạn; friendly: thân thiện; unfriendly: không thân thiện", ""],
+  ["nerve", "nervous (adj)¦nervously (adv)¦nervousness (n)", "nervous: lo lắng; nervousness: sự lo lắng", ""],
+  ["willing", "unwilling (adj)¦(un)willingness (n)¦(un)willingly (adv)", "willing: sẵn lòng; unwilling: không sẵn lòng; willingness: sự sẵn lòng", ""]
+];
+
+/* ===== Cấu trúc Section của từng Unit ===== */
+const UNIT2_SECTIONS = [
+  {id:"vocab", navLabel:"Topic Vocabulary", cls:"--c-change", title:"Topic Vocabulary in Contrast", lede:"Từ vựng theo chủ đề Travel và phân biệt các từ dễ nhầm lẫn (voyage vs journey, view vs sight...).", type:"vocab", data:U2_VOCAB},
+  {id:"pv", navLabel:"Phrasal verbs", cls:"--c-pv", title:"Phrasal verbs", lede:"Các cụm động từ quan trọng thường gặp trong chủ đề du lịch và di chuyển.", type:"vocab", data:U2_PHRASAL_VERBS},
+  {id:"col", navLabel:"Collocations", cls:"--c-col", title:"Phrases and Collocations", lede:"Các cụm từ khóa kết hợp cố định đi với giới từ.", type:"phrases", data:U2_COLLOCATIONS},
+  {id:"wp", navLabel:"Word Patterns", cls:"--c-wf", title:"Word Patterns", lede:"Cấu trúc từ và động từ đi kèm (V-ing / To V / Giới từ).", type:"wp", data:U2_WORD_PATTERNS}
+];
+
+const UNIT4_SECTIONS = [
+  {id:"vocab", navLabel:"Topic Vocabulary", cls:"--c-change", title:"Topic Vocabulary in Contrast", lede:"33 từ vựng theo chủ đề Hobbies and Games và phân biệt các từ dễ nhầm lẫn.", type:"vocab", data:U4_VOCAB},
+  {id:"pv", navLabel:"Phrasal verbs", cls:"--c-pv", title:"Phrasal verbs", lede:"14 cụm động từ quan trọng thường gặp trong ngữ cảnh giải trí, thể thao và sở thích.", type:"vocab", data:U4_PHRASAL_VERBS},
+  {id:"col", navLabel:"Collocations", cls:"--c-col", title:"Phrases and Collocations", lede:"11 cụm từ khóa kết hợp. Chú ý các giới từ đi kèm.", type:"phrases", data:U4_COLLOCATIONS},
+  {id:"wp", navLabel:"Word Patterns", cls:"--c-wf", title:"Word Patterns", lede:"13 cấu trúc từ và động từ đi kèm (V-ing / To V / Giới từ). Chú ý cột Lưu ý và phân biệt.", type:"wp", data:U4_WORD_PATTERNS}
+];
+
+const UNIT6_SECTIONS = [
+  {id:"vocab", navLabel:"Topic Vocabulary", cls:"--c-change", title:"Topic Vocabulary in Contrast", lede:"Từ vựng theo chủ đề Technology and Inventions và phân biệt các từ dễ nhầm lẫn.", type:"vocab", data:U6_VOCAB},
+  {id:"pv", navLabel:"Phrasal verbs", cls:"--c-pv", title:"Phrasal verbs", lede:"14 cụm động từ thường gặp trong ngữ cảnh công nghệ, máy móc và nghiên cứu.", type:"vocab", data:U6_PHRASAL_VERBS},
+  {id:"col", navLabel:"Collocations", cls:"--c-col", title:"Phrases and Collocations", lede:"12 cụm từ khóa kết hợp cố định.", type:"phrases", data:U6_COLLOCATIONS},
+  {id:"wp", navLabel:"Word Patterns", cls:"--c-wf", title:"Word Patterns", lede:"12 cấu trúc từ và động từ đi kèm (V-ing / To V / Giới từ).", type:"wp", data:U6_WORD_PATTERNS}
+];
+
+const UNIT8_SECTIONS = [
+  {id:"vocab", navLabel:"Topic Vocabulary", cls:"--c-change", title:"Topic Vocabulary in Contrast", lede:"Từ vựng theo chủ đề Media & Communication và cách phân biệt các từ dễ nhầm lẫn như agree/accept, headline/heading.", type:"vocab", data:U8_VOCAB},
+  {id:"pv", navLabel:"Phrasal verbs", cls:"--c-pv", title:"Phrasal verbs", lede:"10 cụm động từ thường gặp trong ngữ cảnh báo chí, truyền thông và học tập.", type:"vocab", data:U8_PHRASAL_VERBS},
+  {id:"col", navLabel:"Collocations", cls:"--c-col", title:"Phrases and Collocations", lede:"Các cụm từ khóa và collocations quen thuộc với chủ đề truyền thông.", type:"phrases", data:U8_COLLOCATIONS},
+  {id:"wp", navLabel:"Word Patterns", cls:"--c-wf", title:"Word Patterns", lede:"Cấu trúc từ và cách đi kèm giới từ, mệnh đề trong ngữ cảnh báo chí và truyền thông.", type:"wp", data:U8_WORD_PATTERNS},
+  {id:"wf", navLabel:"Word Formation", cls:"--c-tech", title:"Word Formation", lede:"Cách tạo từ và các dạng từ liên quan đến báo chí, thông tin và truyền thông.", type:"formation", data:U8_WORD_FORMATION}
+];
+
+const UNIT10_SECTIONS = [
+  {id:"vocab", navLabel:"Topic Vocabulary", cls:"--c-change", title:"Topic Vocabulary in Contrast", lede:"Từ vựng chủ đề People and Society, gồm các cặp dễ nhầm như relationship/connection, crowd/audience và popular/famous.", type:"vocab", data:U10_VOCAB},
+  {id:"pv", navLabel:"Phrasal verbs", cls:"--c-pv", title:"Phrasal verbs", lede:"Các cụm động từ về quan hệ, gia đình, cách đối xử và những cột mốc trong cuộc sống.", type:"vocab", data:U10_PHRASAL_VERBS},
+  {id:"patterns", navLabel:"Phrases & Word Patterns", cls:"--c-wf", title:"Phrases, Collocations & Word Patterns", lede:"Các cụm từ cố định và cấu trúc giới từ thường gặp trong chủ đề People and Society.", type:"wp", data:U10_PATTERNS},
+  {id:"wf", navLabel:"Word Formation", cls:"--c-tech", title:"Word Formation", lede:"Các họ từ về con người, tính cách, quan hệ và hành vi xã hội.", type:"formation", data:U10_WORD_FORMATION}
+];
+
+/* ===== TOPICS ===== */
+const TOPICS = [
+  {id:"unit2", name:"Unit 2: Travel", sections: UNIT2_SECTIONS},
+  {id:"unit4", name:"Unit 4: Hobbies and Games", sections: UNIT4_SECTIONS},
+  {id:"unit6", name:"Unit 6: Technology", sections: UNIT6_SECTIONS},
+  {id:"unit8", name:"Unit 8: Media & Communication", sections: UNIT8_SECTIONS},
+  {id:"unit10", name:"Unit 10: People and Society", sections: UNIT10_SECTIONS}
+];
+
+/* ===== Logic Render Giao diện ===== */
+const app = document.getElementById('app');
+const topicBar = document.getElementById('topics');
+const nav = document.getElementById('nav');
+let current = TOPICS[0].id; 
+
+function fmt(s){ return s.split('|').map(x => x.replace(/\*(.+?)\*/g,'<b>$1</b>')).join('<br>'); }
+function items(s){
+  return '<ul class="ph">' + s.split('¦').map(x => {
+    const i = x.indexOf(' = ');
+    return i < 0 ? '<li><b>'+x+'</b></li>' : '<li><b>'+x.slice(0,i)+'</b> — '+x.slice(i+3)+'</li>';
+  }).join('') + '</ul>';
+}
+function synant(syn, ant){
+  let h = '';
+  if (syn) h += '<div><span class="tag s">Syn.</span>'+syn+'</div>';
+  if (ant) h += '<div><span class="tag a">Ant.</span>'+ant+'</div>';
+  return h || '<span style="color:var(--muted)">—</span>';
+}
+function headCells(cols){ return '<tr>'+cols.map(c => '<th class="'+(c[1]||'')+'">'+c[0]+'</th>').join('')+'</tr>'; }
+
+function buildSection(topicId, sec){
+  let head, rowsHtml;
+  if (sec.type === 'formation') {
+    head = headCells([["Từ gốc",""],["Họ từ","c-m"],["Nghĩa và cách dùng","c-n"]]);
+    rowsHtml = sec.data.map(r =>
+      '<tr><td class="w" data-l="Từ gốc"><div class="hw">'+r[0]+'</div></td>'+
+      '<td class="c-m" data-l="Họ từ">'+items(r[1])+'</td>'+ 
+      '<td class="c-n" data-l="Nghĩa và cách dùng">'+r[2]+'</td></tr>').join('');
+  } else if (sec.type === 'wp') {
+    head = headCells([["Từ gốc",""],["Cấu trúc đi kèm (Word Patterns)","c-m"],["Ví dụ","c-e"],["Lưu ý và phân biệt","c-n"]]);
+    rowsHtml = sec.data.map(r =>
+      '<tr><td class="w" data-l="Từ gốc"><div class="hw">'+r[0]+'</div></td>'+
+      '<td class="c-m" data-l="Cấu trúc đi kèm">'+items(r[1])+'</td>'+
+      '<td class="c-e ex" data-l="Ví dụ">'+fmt(r[2])+'</td>'+
+      '<td class="c-n" data-l="Lưu ý">'+r[3]+'</td></tr>').join('');
+  } else {
+    const meaningLabel = sec.type === 'phrases' ? 'Cụm trong sách (Anh – Việt)' : 'Nghĩa (Anh – Việt)';
+    head = headCells([
+      [sec.type === 'phrases' ? 'Từ khóa' : 'Từ',""],
+      [meaningLabel,"c-m"],["Synonyms / Antonyms","c-s"],["Ví dụ","c-e"],["Collocations","c-c"],["Sắc thái và ngữ cảnh","c-n"]]);
+    
+    rowsHtml = sec.data.map(r => {
+      const meaning = sec.type === 'phrases'
+        ? items(r[2])
+        : '<div>'+r[2]+'</div><div class="vi">'+r[3]+'</div>';
+        
+      const posHtml = r[1] ? '<div class="pos">'+r[1]+'</div>' : '';
+      const phoneticHtml = (sec.type === 'vocab' && r[9]) ? '<div class="phonetic">'+r[9]+'</div>' : '';
+
+      return '<tr><td class="w" data-l="'+(sec.type==='phrases'?'Từ khóa':'Từ')+'"><div class="hw">'+r[0]+'</div>'+ phoneticHtml + posHtml+'</td>'+
+        '<td class="c-m" data-l="'+meaningLabel+'">'+meaning+'</td>'+
+        '<td class="c-s" data-l="Synonyms / Antonyms">'+synant(r[4], r[5])+'</td>'+
+        '<td class="c-e ex" data-l="Ví dụ">'+fmt(r[6])+'</td>'+
+        '<td class="c-c" data-l="Collocations">'+r[7]+'</td>'+
+        '<td class="c-n" data-l="Sắc thái và ngữ cảnh">'+r[8]+'</td></tr>';
+    }).join('');
+  }
+  const el = document.createElement('section');
+  el.id = topicId + '-' + sec.id;
+  el.style.setProperty('--c', 'var('+sec.cls+')');
+  el.innerHTML =
+    '<h2>'+sec.title+' <small>'+sec.data.length+' mục</small></h2>'+
+    '<p class="lede">'+sec.lede+'</p>'+
+    '<div class="wrap"><table><thead>'+head+'</thead><tbody>'+rowsHtml+'</tbody></table></div>';
+  return el;
+}
+
+// ===== Menu Dropdown Logic =====
+const dropdownWrapper = document.createElement('div');
+dropdownWrapper.className = 'dropdown-wrapper'; 
+
+const mainBtn = document.createElement('button');
+mainBtn.type = 'button';
+mainBtn.className = 'topics-btn';
+mainBtn.setAttribute('aria-label', 'Chọn Unit');
+mainBtn.setAttribute('aria-expanded', 'false');
+mainBtn.textContent = 'Tổng hợp Unit';
+
+const dropdownContent = document.createElement('div');
+dropdownContent.className = 'topics-dropdown';
+
+dropdownWrapper.appendChild(mainBtn);
+dropdownWrapper.appendChild(dropdownContent);
+topicBar.appendChild(dropdownWrapper);
+
+mainBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = dropdownContent.classList.toggle('show');
+  mainBtn.setAttribute('aria-expanded', String(isOpen));
+});
+
+window.addEventListener('click', () => {
+  dropdownContent.classList.remove('show');
+  mainBtn.setAttribute('aria-expanded', 'false');
+});
+
+TOPICS.forEach(t => {
+  const box = document.createElement('div');
+  box.className = 'topic';
+  box.dataset.topic = t.id;
+  t.sections.forEach(sec => box.appendChild(buildSection(t.id, sec)));
+  app.appendChild(box);
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.textContent = t.name;
+  btn.dataset.topic = t.id;
+  btn.setAttribute('aria-pressed', String(t.id === current));
+  btn.addEventListener('click', () => {
+    setTopic(t.id);
+    dropdownContent.classList.remove('show');
+    mainBtn.setAttribute('aria-expanded', 'false');
+    TOPICS.forEach(item => {
+      const target = dropdownContent.querySelector('[data-topic="' + item.id + '"]');
+      if (target) target.setAttribute('aria-pressed', String(item.id === t.id));
+    });
+  });
+  dropdownContent.appendChild(btn);
+});
+
+function buildNav(){
+  const t = TOPICS.find(x => x.id === current);
+  nav.innerHTML = t.sections.map(s =>
+    '<a href="#'+t.id+'-'+s.id+'" style="--c:var('+s.cls+')">'+s.navLabel+'</a>').join('');
+}
+
+function setTopic(id){
+  current = id;
+  buildNav();
+  TOPICS.forEach(item => {
+    const btn = dropdownContent.querySelector('[data-topic="' + item.id + '"]');
+    if (btn) btn.setAttribute('aria-pressed', String(item.id === id));
+  });
+  run();
+  window.scrollTo({top:0});
+}
+
+function run(){
+  document.querySelectorAll('.topic').forEach(tp => {
+    tp.style.display = tp.dataset.topic === current ? '' : 'none';
+  });
+}
+
+const viewTabs = Array.from(document.querySelectorAll('.view-tabs [role="tab"]'));
+const viewPanels = Array.from(document.querySelectorAll('.view-panel'));
+const studyUnit = document.getElementById('study-unit');
+const readingUnit = document.getElementById('reading-unit');
+const readingLevel = document.getElementById('reading-level');
+const storageKeys = {progress: 'vocabStudyProgress'};
+
+function readStorage(key, fallback){
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch (error) {
+    return fallback;
+  }
+}
+function writeStorage(key, value){
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (error) {}
+}
+
+let savedProgress = readStorage(storageKeys.progress, {});
+function progressFor(unitId){
+  if (!savedProgress[unitId]) savedProgress[unitId] = {known: [], best: {}};
+  if (!Array.isArray(savedProgress[unitId].known)) savedProgress[unitId].known = [];
+  if (!savedProgress[unitId].best) savedProgress[unitId].best = {};
+  return savedProgress[unitId];
+}
+function saveProgress(){ writeStorage(storageKeys.progress, savedProgress); }
+function shuffle(list){
+  const result = list.slice();
+  for (let i = result.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+function wordBank(unitId){
+  const topic = TOPICS.find(item => item.id === unitId);
+  if (!topic) return [];
+  return topic.sections.filter(section => section.type === 'vocab').flatMap(section =>
+    section.data.map(row => ({
+      term: String(row[0] || ''),
+      pos: String(row[1] || ''),
+      definition: String(row[2] || ''),
+      meaning: String(row[3] || row[2] || ''),
+      synonyms: String(row[4] || ''),
+      antonyms: String(row[5] || ''),
+      example: String(row[6] || ''),
+      collocations: String(row[7] || ''),
+      nuance: String(row[8] || '')
+    }))
+  ).filter(item => item.term);
+}
+
+function selectUnitOptions(select){
+  TOPICS.forEach(topic => {
+    const option = document.createElement('option');
+    option.value = topic.id;
+    option.textContent = topic.name;
+    select.appendChild(option);
+  });
+  select.value = current;
+}
+selectUnitOptions(studyUnit);
+selectUnitOptions(readingUnit);
+
+viewTabs.forEach(tab => tab.addEventListener('click', () => {
+  viewTabs.forEach(item => item.setAttribute('aria-selected', String(item === tab)));
+  viewPanels.forEach(panel => { panel.hidden = panel.id !== tab.getAttribute('aria-controls'); });
+}));
+
+const cardTerm = document.getElementById('card-term');
+const cardMeta = document.getElementById('card-meta');
+const cardAnswer = document.getElementById('card-answer');
+const cardPosition = document.getElementById('card-position');
+const cardReveal = document.getElementById('card-reveal');
+const cardReview = document.getElementById('card-review');
+const cardKnown = document.getElementById('card-known');
+let cardQueue = [];
+let cardRetry = [];
+let cardIndex = 0;
+
+function updateStudyProgress(){
+  const bank = wordBank(studyUnit.value);
+  const progress = progressFor(studyUnit.value);
+  const best = Object.values(progress.best).filter(Number.isFinite);
+  const bestText = best.length ? ' · Quiz tốt nhất ' + Math.max(...best) + '/10' : '';
+  document.getElementById('study-progress').textContent =
+    progress.known.length + '/' + bank.length + ' từ đã nhớ' + bestText;
+}
+function renderCard(){
+  const cardNext = document.getElementById('card-next');
+  if (cardIndex >= cardQueue.length && cardRetry.length){
+    cardQueue = shuffle(cardRetry).map(item => ({...item, retryRound: true}));
+    cardRetry = [];
+    cardIndex = 0;
+  }
+  if (!cardQueue.length || cardIndex >= cardQueue.length){
+    cardTerm.textContent = 'Hoàn tất lượt ôn';
+    cardMeta.textContent = '';
+    cardAnswer.textContent = 'Bạn đã xem hết các thẻ trong lượt này.';
+    cardAnswer.hidden = false;
+    cardPosition.textContent = '';
+    cardReveal.hidden = true;
+    cardReview.hidden = true;
+    cardKnown.hidden = true;
+    cardNext.hidden = true;
+    updateStudyProgress();
+    return;
+  }
+  const item = cardQueue[cardIndex];
+  const retryRound = Boolean(item.retryRound);
+  cardTerm.textContent = item.term;
+  cardMeta.textContent = item.pos;
+  cardAnswer.textContent = [item.meaning, item.definition, item.example.replace(/\*(.*?)\*/g, '$1'), item.collocations]
+    .filter(Boolean).join('\n');
+  cardAnswer.hidden = true;
+  cardPosition.textContent = (retryRound ? 'Ôn lại · ' : '') + (cardIndex + 1) + '/' + cardQueue.length;
+  cardReveal.hidden = false;
+  cardReview.hidden = true;
+  cardKnown.hidden = true;
+  cardNext.hidden = true;
+  updateStudyProgress();
+}
+function startCards(){
+  cardQueue = shuffle(wordBank(studyUnit.value));
+  cardRetry = [];
+  cardIndex = 0;
+  renderCard();
+}
+cardReveal.addEventListener('click', () => {
+  cardAnswer.hidden = false;
+  cardReveal.hidden = true;
+  cardReview.hidden = false;
+  cardKnown.hidden = false;
+});
+cardReview.addEventListener('click', () => {
+  if (cardQueue[cardIndex]) cardRetry.push(cardQueue[cardIndex]);
+  cardIndex++;
+  renderCard();
+});
+cardKnown.addEventListener('click', () => {
+  const progress = progressFor(studyUnit.value);
+  const term = cardQueue[cardIndex] && cardQueue[cardIndex].term;
+  if (term && !progress.known.includes(term)) progress.known.push(term);
+  saveProgress();
+  cardIndex++;
+  renderCard();
+});
+
+const quizPrompt = document.getElementById('quiz-prompt');
+const quizOptions = document.getElementById('quiz-options');
+const quizFeedback = document.getElementById('quiz-feedback');
+const quizScore = document.getElementById('quiz-score');
+const quizNext = document.getElementById('quiz-next');
+let quizLevel = 'basic';
+let quizRound = [];
+let quizIndex = 0;
+let quizCorrect = 0;
+let quizAnswered = false;
+let quizFinished = false;
+
+function choiceLabel(item){
+  return quizLevel === 'basic' ? (item.meaning || item.definition) : item.term;
+}
+function makeChoices(answer){
+  const choices = [answer];
+  const labels = new Set([choiceLabel(answer)]);
+  shuffle(wordBank(studyUnit.value).filter(item => item !== answer)).some(item => {
+    const label = choiceLabel(item);
+    if (label && !labels.has(label)){
+      labels.add(label);
+      choices.push(item);
+    }
+    return choices.length === 4;
+  });
+  return shuffle(choices);
+}
+function renderQuizQuestion(){
+  quizAnswered = false;
+  quizNext.hidden = true;
+  quizFeedback.textContent = '';
+  quizOptions.replaceChildren();
+  if (!quizRound.length){
+    quizPrompt.textContent = 'Unit này chưa có từ để luyện.';
+    quizScore.textContent = '';
+    return;
+  }
+  if (quizFinished){
+    quizPrompt.textContent = 'Hoàn thành lượt quiz!';
+    quizFeedback.textContent = 'Bạn trả lời đúng ' + quizCorrect + '/' + quizRound.length + ' câu.';
+    quizNext.textContent = 'Làm lượt mới';
+    quizNext.hidden = false;
+    return;
+  }
+  const item = quizRound[quizIndex];
+  quizScore.textContent = 'Câu ' + (quizIndex + 1) + '/' + quizRound.length + ' · đúng ' + quizCorrect;
+  if (quizLevel === 'basic'){
+    quizPrompt.textContent = '“' + item.term + '” có nghĩa nào?';
+  } else if (quizLevel === 'intermediate'){
+    const cloze = item.example.replace(/\*(.*?)\*/g, '_____');
+    quizPrompt.textContent = cloze !== item.example ? cloze : 'Chọn từ phù hợp với câu: ' + item.example;
+  } else {
+    quizPrompt.textContent = 'Chọn từ/cụm phù hợp với mô tả: ' + (item.nuance || item.definition || item.meaning);
+  }
+  makeChoices(item).forEach(choice => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = choiceLabel(choice);
+    button.addEventListener('click', () => answerQuiz(button, choice, item));
+    quizOptions.appendChild(button);
+  });
+}
+function startQuiz(){
+  quizRound = shuffle(wordBank(studyUnit.value)).slice(0, 10);
+  quizIndex = 0;
+  quizCorrect = 0;
+  quizFinished = false;
+  quizNext.textContent = 'Câu tiếp theo';
+  renderQuizQuestion();
+}
+function answerQuiz(button, choice, answer){
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const correct = choice === answer;
+  if (correct) quizCorrect++;
+  quizOptions.querySelectorAll('button').forEach(option => {
+    option.disabled = true;
+    if (option.textContent === choiceLabel(answer)) option.classList.add('correct');
+  });
+  if (!correct) button.classList.add('incorrect');
+  quizFeedback.textContent = correct
+    ? 'Chính xác! ' + (answer.nuance || answer.meaning)
+    : 'Chưa đúng. Đáp án: ' + answer.term + ' · ' + answer.meaning;
+  quizScore.textContent = 'Câu ' + (quizIndex + 1) + '/' + quizRound.length + ' · đúng ' + quizCorrect;
+  quizNext.textContent = quizIndex === quizRound.length - 1 ? 'Xem kết quả' : 'Câu tiếp theo';
+  quizNext.hidden = false;
+}
+quizNext.addEventListener('click', () => {
+  if (quizFinished){ startQuiz(); return; }
+  if (!quizAnswered) return;
+  if (quizIndex === quizRound.length - 1){
+    quizFinished = true;
+    const progress = progressFor(studyUnit.value);
+    progress.best[quizLevel] = Math.max(progress.best[quizLevel] || 0, quizCorrect);
+    saveProgress();
+    updateStudyProgress();
+  } else {
+    quizIndex++;
+  }
+  renderQuizQuestion();
+});
+document.querySelectorAll('.difficulty-tabs button').forEach(button => {
+  button.addEventListener('click', () => {
+    quizLevel = button.dataset.level;
+    document.querySelectorAll('.difficulty-tabs button').forEach(option =>
+      option.setAttribute('aria-pressed', String(option === button)));
+    startQuiz();
+  });
+});
+document.getElementById('mode-cards').addEventListener('click', () => {
+  document.getElementById('mode-cards').setAttribute('aria-selected', 'true');
+  document.getElementById('mode-quiz').setAttribute('aria-selected', 'false');
+  document.getElementById('review-cards').hidden = false;
+  document.getElementById('review-quiz').hidden = true;
+});
+document.getElementById('mode-quiz').addEventListener('click', () => {
+  document.getElementById('mode-cards').setAttribute('aria-selected', 'false');
+  document.getElementById('mode-quiz').setAttribute('aria-selected', 'true');
+  document.getElementById('review-cards').hidden = true;
+  document.getElementById('review-quiz').hidden = false;
+});
+
+const readingUnitTitle = document.getElementById('reading-unit-title');
+const readingTitle = document.getElementById('reading-title');
+const readingLevelLabel = document.getElementById('reading-level-label');
+const readingPassage = document.getElementById('reading-passage');
+const readingQuestion = document.getElementById('reading-question');
+const readingOptions = document.getElementById('reading-options');
+const readingFeedback = document.getElementById('reading-feedback');
+const readingProgress = document.getElementById('reading-progress');
+const readingNext = document.getElementById('reading-next');
+
+const READING_LIBRARY = {
+  unit2: {
+    b2: {
+      title: "A Slower Way to See a City",
+      passage: `When Mai visited Da Nang, she planned to see six famous places in one day. At the station, however, she learned that heavy rain had delayed her bus. Instead of paying for a taxi, she took a local train to a small coastal town and asked a shop owner for directions to the harbour.\n\nThe change of plan turned out well. Mai joined a short boat excursion, ate lunch at a family-run café and watched fishermen repair their nets. She did not visit every place on her list, but she spoke with local people and learned how the town had changed over time.\n\nMai now believes that travel is not only about reaching a destination. A slower journey can create unexpected connections and help visitors understand a place beyond its most popular sights.`,
+      questions: [
+        {prompt: "Why did Mai take the local train?", options: ["It was the only way to reach Da Nang.", "The rain delayed her bus and she wanted to avoid a taxi.", "A shop owner invited her to take it.", "She wanted to visit six places in one day."], answer: 1, explanation: "The bus was delayed by heavy rain, and she chose the train instead of a taxi."},
+        {prompt: "What did Mai do in the coastal town?", options: ["She joined a boat trip and visited a café.", "She went to every place on her list.", "She booked a hotel for the fishermen.", "She drove back to the station."], answer: 0, explanation: "She took a boat excursion, ate at a café and watched fishermen work."},
+        {prompt: "What did Mai learn about travel?", options: ["A strict plan always saves time.", "Famous sights are the most important part of a trip.", "A slower trip can help visitors understand a place.", "Local trains are always better than buses."], answer: 2, explanation: "She concludes that an unhurried journey can reveal more about a place."}
+      ]
+    },
+    c1: {
+      title: "The Hidden Cost of a Perfect Itinerary",
+      passage: `Travel platforms make it easy to turn a holiday into a sequence of timed attractions. Their maps promise efficiency: arrive here, photograph that, and move on before the crowd grows. Yet a journey measured only by the number of sights visited may leave little room for understanding the place itself.\n\nIn one coastal district, residents asked visitors to avoid a narrow street during the morning market. The request was not a campaign against tourism. It was an attempt to protect an ordinary routine from becoming a performance staged for outsiders. Some tour operators adjusted their routes; others argued that any restriction would reduce local income.\n\nThe disagreement points to a difficult balance. Tourism can provide jobs and sustain businesses, but it can also alter the relationships that make a neighbourhood distinctive. A responsible itinerary therefore requires more than accurate directions. It requires attention to whose needs shape the route and who bears its costs.`,
+      questions: [
+        {prompt: "What criticism does the writer make of tightly scheduled travel?", options: ["It prevents tourists from reaching any attractions.", "It may prioritize collecting sights over understanding a place.", "It makes maps less accurate.", "It always reduces income for local businesses."], answer: 1, explanation: "The opening argues that counting attractions can leave little room for understanding."},
+        {prompt: "Why did residents ask visitors to avoid the street in the morning?", options: ["They wanted to close the market permanently.", "They wanted to protect an everyday local routine.", "They were opposed to all visitors and tourism.", "They needed space to build a new road."], answer: 1, explanation: "The text says the request aimed to protect the ordinary market routine, not reject tourism."},
+        {prompt: "What does the writer suggest a responsible itinerary should consider?", options: ["Only the visitor's travel time.", "The number of photographs visitors can take.", "Whose needs shape the route and who bears its costs.", "Whether every attraction is famous internationally."], answer: 2, explanation: "The final sentence explicitly asks who shapes the route and who bears its costs."}
+      ]
+    }
+  },
+  unit4: {
+    b2: {
+      title: "A Club Without Winners",
+      passage: `Every Thursday, a group of teenagers meets at the community centre to play board games. At first, the club was meant to prepare two students for a regional competition. Soon, however, more people joined in, including beginners who had never played before.\n\nThe organiser changed the rules for some evenings. Experienced players had to explain their strategies, while new members could ask for help without losing points. The games became less competitive, but the group grew. Several members said they had made friends with people they would not normally meet at school.\n\nThe club still enters tournaments occasionally. Its members enjoy trying to win, but they have learned that a game can also develop patience, concentration and cooperation. For them, the most valuable result is not always the score.`,
+      questions: [
+        {prompt: "Why did the organiser change the rules?", options: ["To make the games longer.", "To help beginners participate and ask questions.", "To stop the club entering competitions.", "To make experienced players leave."], answer: 1, explanation: "The new rules made it easier for beginners to join and learn."},
+        {prompt: "What happened as more people joined the club?", options: ["The group became smaller.", "The games became more competitive every week.", "Members met people outside their usual school circle.", "The community centre closed."], answer: 2, explanation: "Several members made friends with people they would not usually meet at school."},
+        {prompt: "What does the final paragraph say about winning?", options: ["Winning is the club's only goal.", "The club never enters tournaments.", "Winning can be enjoyable, but it is not the only valuable outcome.", "The score is decided before each game."], answer: 2, explanation: "The group still competes, but values skills and relationships as well as the score."}
+      ]
+    },
+    c1: {
+      title: "Why Amateur Sport Matters",
+      passage: `Local sports clubs are often assessed by their facilities, funding and results. Such measures matter, but they overlook a less visible contribution: clubs create repeated encounters among people who might otherwise remain strangers. A weekly practice can establish trust precisely because it is ordinary and predictable.\n\nThis does not mean competition should disappear. A difficult match can give participants a shared aim and a reason to improve. Problems arise when a club treats every amateur as a future professional, allowing selection and performance to determine who belongs. Members who play for pleasure may then feel that their contribution is a fault rather than a strength.\n\nA sustainable club makes room for different ambitions. It offers serious training to those who want it while protecting accessible sessions for others. In doing so, it recognises that the social value of sport is not a consolation prize for people who fail to win; it is one of the reasons the institution exists.`,
+      questions: [
+        {prompt: "What contribution of local clubs is described as less visible?", options: ["They provide professional contracts to everyone.", "They create repeated opportunities for strangers to build trust.", "They eliminate the need for public facilities.", "They prevent members from competing."], answer: 1, explanation: "The passage emphasizes ordinary repeated encounters that build trust."},
+        {prompt: "What problem arises when every amateur is treated as a future professional?", options: ["People who play for enjoyment may feel they do not belong.", "Competition becomes too easy.", "The club can no longer improve its facilities.", "Professional players stop training."], answer: 0, explanation: "The text warns that selection and performance can exclude people who play for pleasure."},
+        {prompt: "What is the writer's main argument?", options: ["Clubs should focus only on winning.", "Social value is secondary to professional success.", "A healthy club supports different ambitions and values social participation.", "Amateur sport should replace professional sport."], answer: 2, explanation: "The conclusion calls for both serious training and accessible participation."}
+      ]
+    }
+  },
+  unit6: {
+    b2: {
+      title: "The Repair Café",
+      passage: `When a toaster stopped working, Linh expected to replace it. A neighbour suggested taking it to a repair café, where volunteers help residents fix household objects. The café did not promise that every machine could be saved. Instead, visitors learned how to examine a problem safely and decide whether a repair was possible.\n\nLinh watched a volunteer check the cable and discover a loose connection. After the part was secured, the toaster worked again. Linh had not only saved money; she had also learned how the machine operated.\n\nRepair cafés cannot solve the larger problem of electronic waste by themselves. Some products are difficult to open, and spare parts may be unavailable. Even so, they encourage people to ask whether an object is truly useless before throwing it away.`,
+      questions: [
+        {prompt: "What did the repair café promise visitors?", options: ["That every machine would be repaired.", "That they would receive a new appliance.", "Help examining an object and deciding if repair was possible.", "A free replacement for any broken item."], answer: 2, explanation: "The café offers help and learning, not a guarantee that every item can be repaired."},
+        {prompt: "What was wrong with Linh's toaster?", options: ["Its cable had a loose connection.", "It had no spare parts.", "Its heating element had melted.", "It had been opened incorrectly."], answer: 0, explanation: "A volunteer found and secured a loose connection in the cable."},
+        {prompt: "What larger issue does the passage mention?", options: ["The high cost of cafés.", "Electronic waste and products that are hard to repair.", "A shortage of volunteers in schools.", "People buying too many toasters."], answer: 1, explanation: "The final paragraph names electronic waste and limited repairability as wider challenges."}
+      ]
+    },
+    c1: {
+      title: "Technology in the Public Service",
+      passage: `A city recently introduced an online system for booking public services. Officials described it as a more efficient method: residents could submit forms at any hour, and staff could process routine requests faster. Early results supported that claim. Waiting times fell, and fewer applications were returned because of missing information.\n\nYet efficiency is not the same as equal access. Some residents lacked reliable internet, while others found the instructions difficult to understand. The city responded by keeping a telephone line open and placing trained assistants in libraries. These measures cost money, but removing them would have transferred the burden of the new system onto the people least able to use it.\n\nThe experience suggests that digital services should be evaluated by more than speed. A successful system must be accurate and convenient without making participation depend on a person's device, language or confidence with technology.`,
+      questions: [
+        {prompt: "Which early result supported the city's claim of greater efficiency?", options: ["More staff were hired for every application.", "Waiting times fell and fewer forms were returned incomplete.", "All residents stopped using the telephone.", "The online system removed every service fee."], answer: 1, explanation: "The passage reports shorter waits and fewer incomplete applications."},
+        {prompt: "Why did the city keep telephone support and library assistants?", options: ["To make online applications slower.", "To help residents who could not easily use the digital system.", "To advertise a new device.", "To replace all online services."], answer: 1, explanation: "Some residents lacked internet access or found the instructions difficult."},
+        {prompt: "According to the writer, how should digital services be judged?", options: ["Only by how quickly they process forms.", "By whether they are fast and accessible to different residents.", "By how many devices the city purchases.", "By whether paper forms are completely prohibited."], answer: 1, explanation: "The conclusion says speed is insufficient; access and participation also matter."}
+      ]
+    }
+  },
+  unit8: {
+    b2: {
+      title: "Before Sharing the Story",
+      passage: `A short video appeared in the neighbourhood group chat one evening. It seemed to show a road bridge collapsing, and several people forwarded it with warnings. By morning, the local radio announcer had received dozens of calls from worried listeners.\n\nA journalist checked the location and found that the video had been filmed in another country several years earlier. The bridge nearby was safe. The radio station corrected the story and explained how the team had verified the information. Some listeners were annoyed that the correction took longer than the original post to spread.\n\nThe station later invited residents to discuss how rumours travel online. Its commentator reminded the audience that forwarding a dramatic clip is not the same as confirming it. A few minutes spent checking a source can prevent unnecessary fear.`,
+      questions: [
+        {prompt: "Why were people worried about the video?", options: ["It showed a bridge collapsing.", "The radio station had closed.", "A journalist had disappeared.", "The group chat had been deleted."], answer: 0, explanation: "People thought the video showed a nearby bridge collapsing."},
+        {prompt: "What did the journalist discover?", options: ["The bridge had collapsed years ago.", "The video came from another country and was old.", "The video was made by the radio station.", "The nearby bridge was closed for repairs."], answer: 1, explanation: "The clip was filmed abroad several years earlier; the local bridge was safe."},
+        {prompt: "What lesson did the commentator share?", options: ["Dramatic videos should always be forwarded quickly.", "Radio is the only reliable source of news.", "Check a source before sharing a worrying story.", "Corrections are less important than first posts."], answer: 2, explanation: "The commentator distinguishes forwarding from confirming information."}
+      ]
+    },
+    c1: {
+      title: "The Attention Economy and the News",
+      passage: `News organisations have always competed for readers, but digital platforms have changed the terms of that competition. A headline can now be measured not only by its accuracy or public value, but by how many people click, react and share it. These figures offer useful information about audience interest; they can also reward material that provokes outrage before it informs.\n\nThe problem is not that popular stories are necessarily unimportant. A widely shared investigation may expose a genuine failure. Rather, popularity and reliability answer different questions. One describes how many people noticed a story; the other concerns the quality of its evidence. Treating them as interchangeable can distort editorial decisions and public understanding.\n\nSome newsrooms have responded by adding context boxes, linking source documents and publishing corrections prominently. Such practices cannot eliminate bias or error. They can, however, make the process of reporting more visible and give readers a stronger basis for deciding what deserves their trust.`,
+      questions: [
+        {prompt: "What change has digital competition introduced, according to the passage?", options: ["Headlines are no longer used by news organisations.", "Stories are increasingly measured by clicks, reactions and shares.", "Readers have stopped noticing public-interest stories.", "Editorial decisions are made only by journalists."], answer: 1, explanation: "The first paragraph describes engagement metrics as part of the competition."},
+        {prompt: "Why does the writer distinguish popularity from reliability?", options: ["A popular story cannot be important.", "Popularity measures attention, while reliability concerns evidence.", "Reliable stories are never shared online.", "Both terms describe the same quality."], answer: 1, explanation: "The passage explicitly says the terms answer different questions."},
+        {prompt: "What is the purpose of context boxes and linked source documents?", options: ["To make reporting processes more visible to readers.", "To guarantee that a newsroom will never make an error.", "To prevent readers from sharing stories.", "To replace headlines with long reports."], answer: 0, explanation: "The final paragraph says these practices make reporting more visible and support trust decisions."}
+      ]
+    }
+  },
+  unit10: {
+    b2: {
+      title: "A Garden Shared by Neighbours",
+      passage: `When an empty lot was turned into a community garden, residents disagreed about what to plant. Some wanted vegetables for local families; others preferred flowers that would attract bees. At the first meeting, the discussion became tense, and one neighbour accused another of trying to control the whole project.\n\nThe group decided to divide the land into sections and take turns caring for the shared paths. They also agreed to meet once a month to discuss problems. A retired teacher showed children how to grow tomatoes, while a new family helped repair the fence.\n\nThe garden did not end every disagreement. However, people who had barely spoken before began to recognise one another and ask after each other's families. The project became more than a place to grow food: it gave neighbours a reason to cooperate.`,
+      questions: [
+        {prompt: "What caused disagreement at the first meeting?", options: ["Residents wanted different things to plant.", "The lot was too small for a garden.", "Children refused to help.", "The fence had already been repaired."], answer: 0, explanation: "Some residents preferred vegetables, while others wanted flowers."},
+        {prompt: "How did the group organise the work?", options: ["They hired a company to manage everything.", "They divided the land and took turns caring for shared areas.", "They stopped meeting after the argument.", "They gave each family the same vegetables."], answer: 1, explanation: "They divided the land and agreed to take turns looking after shared paths."},
+        {prompt: "What was an important result beyond growing food?", options: ["Neighbours began communicating and cooperating.", "Everyone agreed on every decision.", "The lot became a private business.", "The children stopped visiting the garden."], answer: 0, explanation: "The garden helped neighbours recognise one another and work together."}
+      ]
+    },
+    c1: {
+      title: "How Social Trust Is Built",
+      passage: `Public discussions of social trust often focus on dramatic acts of solidarity. Yet trust is more commonly built through low-risk, repeated encounters: a neighbour keeping an eye on a parcel, a volunteer explaining a form, or residents agreeing how to use a shared space. Such actions create evidence that other people are dependable, even when they are not close friends.\n\nThese weak ties matter because they connect groups that might otherwise remain separate. They can help information travel, make assistance easier to request and reduce the sense that public life belongs only to the most confident voices. But contact alone is not enough. If meetings are scheduled at inaccessible times or decisions are made before newcomers arrive, participation can reinforce existing inequalities instead of easing them.\n\nBuilding trust therefore requires both opportunity and fairness. Institutions must create settings where people can meet, while also ensuring that influence is not limited to those who already have time, status or confidence.`,
+      questions: [
+        {prompt: "What does the passage mean by low-risk, repeated encounters?", options: ["Large acts that require lifelong friendship.", "Ordinary interactions that gradually show whether people are dependable.", "Online arguments between strangers.", "Formal decisions made by institutions."], answer: 1, explanation: "The examples are small, recurring actions that provide evidence of dependability."},
+        {prompt: "How can weak social ties help a community?", options: ["They ensure that everyone becomes close friends.", "They connect separate groups and help information or assistance move between them.", "They remove the need for public institutions.", "They prevent disagreement in shared spaces."], answer: 1, explanation: "The second paragraph describes weak ties connecting groups and enabling information and help."},
+        {prompt: "What condition does the writer say is necessary for trust-building opportunities to be fair?", options: ["Only confident speakers should attend.", "Meetings should exclude newcomers until decisions are made.", "People with less time or status must also be able to participate.", "All residents must have identical opinions."], answer: 2, explanation: "The conclusion warns against limiting influence to people with existing time, status or confidence."}
+      ]
+    }
+  }
+};
+
+const READING_EXAM_EXTENSIONS = {
+  unit2: {
+    b2: {
+      passage: `Later, Mai compared the town with the resort she had originally planned to visit. She learned that many visitors came for the beach, while residents depended on fishing, transport and small cafés. The shop owner said a new road had brought more tourists but had also made the harbour noisier. Mai wrote these details in her journal instead of taking another photograph. On her way home, she realised the delay had not wasted her day; it had changed what she noticed.`,
+      questions: [
+        {prompt: "True / False / Not Given: The new road made the harbour quieter.", options: ["True", "False", "Not Given"], answer: 1, explanation: "The shop owner said the road had made the harbour noisier."},
+        {prompt: "Vocabulary in context: In paragraph 2, “excursion” is closest in meaning to…", options: ["a short organised trip", "a long-term job", "a public announcement", "a crowded station"], answer: 0, explanation: "An excursion is a short trip, often made for pleasure or sightseeing."}
+      ]
+    },
+    c1: {
+      passage: `The residents' proposal was modest: visitors could use a parallel street until the morning deliveries were complete. It would not prevent anyone from seeing the market, but it might reduce congestion at its busiest point. Some businesses worried that visitors would simply follow the most convenient route and miss their shops. Others offered to place signs at nearby corners. The debate showed that even a small change in a travel route can distribute benefits and inconvenience differently. It also suggested that consultation is more useful when residents can explain the practical effects of a plan before it is finalised.`,
+      questions: [
+        {prompt: "Reference: In paragraph 2, what does “The request” refer to?", options: ["A demand to end tourism in the district", "A request to avoid a narrow street during the morning market", "A plan to close local businesses", "A request for visitors to photograph the market"], answer: 1, explanation: "Residents asked visitors to avoid the narrow street while the morning market was taking place."},
+        {prompt: "Vocabulary in context: In paragraph 2, “staged for outsiders” suggests something…", options: ["arranged to be watched by visitors", "hidden from local residents", "built for daily deliveries", "cancelled without warning"], answer: 0, explanation: "The phrase describes an ordinary routine being turned into something performed for visitors."}
+      ]
+    }
+  },
+  unit4: {
+    b2: {
+      passage: `One new member, Nam, was nervous because he had lost every game he had tried at school. At the club, another player explained the rules before they began and suggested a simple strategy. Nam still lost that evening, but he returned the following week. Later, he helped a younger student learn the same game. The organiser noticed that people who explained a rule often became more patient players themselves. The club therefore kept its beginner evenings, even when it was preparing for a tournament.`,
+      questions: [
+        {prompt: "True / False / Not Given: The club meets every Thursday.", options: ["True", "False", "Not Given"], answer: 0, explanation: "The first paragraph states that the group meets every Thursday."},
+        {prompt: "Vocabulary in context: In paragraph 3, “occasionally” means…", options: ["from time to time", "every single day", "without permission", "for the first time"], answer: 0, explanation: "Occasionally means something happens from time to time, but not regularly."}
+      ]
+    },
+    c1: {
+      passage: `At one club, membership grew after the organisers introduced a session where no scores were recorded. Some participants initially considered this a retreat from serious sport. The coach disagreed: without a scoreboard, players could focus on technique and offer useful feedback without treating every mistake as a fault. The club later found that several members who had joined for social reasons also chose to enter local competitions. Their goals had not been fixed in advance; they developed as confidence and skill grew.`,
+      questions: [
+        {prompt: "Reference: In paragraph 1, what does “Such measures” refer to?", options: ["Facilities, funding and results", "Encounters between strangers", "Training sessions without scores", "The ambitions of individual members"], answer: 0, explanation: "The phrase refers to the facilities, funding and results used to assess clubs."},
+        {prompt: "Vocabulary in context: In paragraph 1, “predictable” is closest in meaning to…", options: ["expected to happen in a regular way", "difficult to understand", "unlikely to continue", "designed to produce a winner"], answer: 0, explanation: "Ordinary, predictable practice happens regularly and can be relied upon."}
+      ]
+    }
+  },
+  unit6: {
+    b2: {
+      passage: `A few weeks later, Linh brought a broken lamp to the same café. This time, she asked questions while a volunteer worked and learned how to test a plug safely. She did not try every repair alone; the volunteers explained which tasks required professional training. The café also kept a list of local shops that sold spare parts. Linh began telling friends about the service, although she reminded them that repairing an object is not always cheaper or safer than replacing it.`,
+      questions: [
+        {prompt: "True / False / Not Given: The café helps people repair lamps as well as toasters.", options: ["True", "False", "Not Given"], answer: 2, explanation: "The passage mentions Linh bringing a lamp, but does not say whether it was repaired there."},
+        {prompt: "Vocabulary in context: In paragraph 2, “secured” means…", options: ["fixed firmly in place", "hidden from view", "replaced with a new part", "tested for its price"], answer: 0, explanation: "The loose connection was secured, meaning it was fastened or fixed firmly."}
+      ]
+    },
+    c1: {
+      passage: `During a later review, the city compared online applications with requests made by telephone or in person. Digital requests were faster on average, but staff found that people using assisted services were more likely to complete complicated forms correctly. The result changed how officials described the project: not as a replacement for human support, but as one channel within a broader system. They also began testing instructions with residents before releasing updates. These adjustments did not remove every barrier, yet they made errors easier to identify before a new process affected thousands of people.`,
+      questions: [
+        {prompt: "Reference: In paragraph 2, what does “These measures” refer to?", options: ["Keeping a phone line open and placing assistants in libraries", "Making every service available only online", "Returning incomplete applications to residents", "Removing routine requests from the system"], answer: 0, explanation: "The measures are the telephone line and trained library assistants."},
+        {prompt: "Vocabulary in context: In paragraph 2, “burden” is closest in meaning to…", options: ["a responsibility or difficulty someone must deal with", "a device used to access a service", "a benefit shared by every resident", "a short wait before an appointment"], answer: 0, explanation: "The new system could shift its difficulties onto residents least able to use it."}
+      ]
+    }
+  },
+  unit8: {
+    b2: {
+      passage: `The following week, a teacher used the incident in a media lesson. Students compared the original clip with a later report and listed the details that helped establish its source: the location, the date and the name of the account that first posted it. They discovered that the correction had reached fewer people than the warning. The class suggested that local groups could pin corrections beside widely shared claims. The teacher agreed that this might help, but added that readers still needed to check whether a source was trustworthy.`,
+      questions: [
+        {prompt: "True / False / Not Given: The correction reached more people than the original warning.", options: ["True", "False", "Not Given"], answer: 1, explanation: "The passage says the correction reached fewer people than the warning."},
+        {prompt: "Vocabulary in context: In paragraph 2, “verified” means…", options: ["checked to establish that something is accurate", "repeated to make it more popular", "changed to make it more dramatic", "translated for a different audience"], answer: 0, explanation: "To verify information is to check that it is accurate or true."}
+      ]
+    },
+    c1: {
+      passage: `In response, one editor proposed that the newsroom review its headlines after publication. If a headline attracted many clicks but prompted readers to complain that the story was misleading, the team would examine what had gone wrong. Another editor warned that complaints could not be treated as a perfect measure either: organised groups might object to accurate reporting simply because they disliked its conclusions. The newsroom eventually agreed to consider audience reactions alongside source quality, independent verification and the potential harm of publishing unconfirmed claims.`,
+      questions: [
+        {prompt: "Reference: In paragraph 3, what does “Such practices” refer to?", options: ["Adding context boxes, linking sources and publishing corrections", "Measuring stories only by the number of clicks", "Removing all headlines from news reports", "Allowing readers to write every article"], answer: 0, explanation: "The phrase points back to the reporting practices listed immediately before it."},
+        {prompt: "Vocabulary in context: In paragraph 2, “interchangeable” means…", options: ["able to be used in place of one another", "easy to measure with a platform", "popular with different readers", "likely to produce the same headline"], answer: 0, explanation: "The writer says popularity and reliability cannot be treated as equivalent measures."}
+      ]
+    }
+  },
+  unit10: {
+    b2: {
+      passage: `By the end of summer, the neighbours had collected enough vegetables to donate several boxes to a nearby food bank. They still disagreed about how often the paths should be watered. Instead of blaming one another, they checked the schedule and noticed that two families had been given the same week by mistake. The group changed the list and asked a teenager to post it beside the gate. The solution was simple, but it helped residents see that many arguments began with unclear information rather than bad intentions.`,
+      questions: [
+        {prompt: "True / False / Not Given: The garden ended every disagreement among the neighbours.", options: ["True", "False", "Not Given"], answer: 1, explanation: "The passage says the garden did not end every disagreement."},
+        {prompt: "Vocabulary in context: In paragraph 1, “blaming” is closest in meaning to…", options: ["saying someone is responsible for a problem", "asking someone to join an activity", "giving someone a compliment", "making a plan with someone"], answer: 0, explanation: "To blame someone is to say that they are responsible for something wrong."}
+      ]
+    },
+    c1: {
+      passage: `A public library can serve as one of these settings. People who visit for different reasons may exchange advice without becoming close friends: one person explains a digital form, while another recommends a local service. Such interactions are easy to overlook because they rarely appear in official reports. Nevertheless, they can make institutions feel more approachable and help residents discover that assistance is available. For this effect to be shared widely, the library must be accessible, its staff must have time to help, and visitors must not feel that asking a basic question is a sign of failure.`,
+      questions: [
+        {prompt: "Reference: In paragraph 1, what does “Such actions” refer to?", options: ["The ordinary encounters described in the examples", "Dramatic acts of solidarity reported by the media", "Formal decisions made by local authorities", "Efforts to prevent neighbours from meeting"], answer: 0, explanation: "The phrase refers to the small, repeated acts listed in the first paragraph."},
+        {prompt: "Vocabulary in context: In paragraph 1, “dependable” is closest in meaning to…", options: ["reliable", "wealthy", "well-known", "independent"], answer: 0, explanation: "Dependable people can be trusted to do what is expected."}
+      ]
+    }
+  }
+};
+
+let readingQuestions = [];
+let readingIndex = 0;
+let readingCorrect = 0;
+let readingAnswered = false;
+let readingFinished = false;
+
+function renderReadingQuestion(){
+  const readingNext = document.getElementById('reading-next');
+  const readingQuestion = document.getElementById('reading-question');
+  const readingOptions = document.getElementById('reading-options');
+  const readingFeedback = document.getElementById('reading-feedback');
+  const readingProgress = document.getElementById('reading-progress');
+  readingOptions.replaceChildren();
+  readingFeedback.textContent = '';
+  readingNext.hidden = true;
+  if (readingFinished){
+    readingProgress.textContent = 'Hoàn thành';
+    readingQuestion.textContent = 'Bạn trả lời đúng ' + readingCorrect + '/' + readingQuestions.length + ' câu.';
+    readingFeedback.textContent = 'Hãy đọc lại bài và thử giải thích bằng lời của bạn vì sao các đáp án đúng.';
+    readingNext.textContent = 'Làm lại bài đọc';
+    readingNext.hidden = false;
+    return;
+  }
+  const item = readingQuestions[readingIndex];
+  if (!item){
+    readingQuestion.textContent = 'Bài đọc này chưa có câu hỏi.';
+    readingProgress.textContent = '';
+    return;
+  }
+  readingProgress.textContent = 'Câu ' + (readingIndex + 1) + '/' + readingQuestions.length + ' · đúng ' + readingCorrect;
+  readingQuestion.textContent = item.prompt;
+  item.options.forEach((label, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = label;
+    button.addEventListener('click', () => {
+      if (readingAnswered) return;
+      readingAnswered = true;
+      const isCorrect = index === item.answer;
+      if (isCorrect) readingCorrect++;
+      readingOptions.querySelectorAll('button').forEach((option, optionIndex) => {
+        option.disabled = true;
+        if (optionIndex === item.answer) option.classList.add('correct');
+      });
+      if (!isCorrect) button.classList.add('incorrect');
+      readingFeedback.textContent = (isCorrect ? 'Chính xác. ' : 'Chưa đúng. ') + item.explanation;
+      readingProgress.textContent = 'Câu ' + (readingIndex + 1) + '/' + readingQuestions.length + ' · đúng ' + readingCorrect;
+      readingNext.textContent = readingIndex === readingQuestions.length - 1 ? 'Xem kết quả' : 'Câu tiếp theo';
+      readingNext.hidden = false;
+    });
+    readingOptions.appendChild(button);
+  });
+}
+
+function loadReading(){
+  const topic = TOPICS.find(item => item.id === readingUnit.value);
+  const baseText = READING_LIBRARY[readingUnit.value] && READING_LIBRARY[readingUnit.value][readingLevel.value];
+  const extension = READING_EXAM_EXTENSIONS[readingUnit.value] && READING_EXAM_EXTENSIONS[readingUnit.value][readingLevel.value];
+  const text = baseText && extension ? {
+    ...baseText,
+    passage: baseText.passage + '\n\n' + extension.passage,
+    questions: baseText.questions.concat(extension.questions)
+  } : baseText;
+  document.getElementById('reading-unit-title').textContent = topic ? topic.name : '';
+  document.getElementById('reading-level-label').textContent = readingLevel.value.toUpperCase() + ' · Đọc bài và chọn đáp án phù hợp';
+  document.getElementById('reading-title').textContent = text ? text.title : 'Chưa có bài đọc';
+  const passage = document.getElementById('reading-passage');
+  passage.replaceChildren();
+  if (text){
+    text.passage.split(/\n\s*\n/).forEach(paragraph => {
+      const element = document.createElement('p');
+      element.textContent = paragraph;
+      passage.appendChild(element);
+    });
+  }
+  readingQuestions = text ? text.questions : [];
+  readingIndex = 0;
+  readingCorrect = 0;
+  readingAnswered = false;
+  readingFinished = false;
+  renderReadingQuestion();
+}
+
+document.getElementById('reading-next').addEventListener('click', () => {
+  if (readingFinished){ loadReading(); return; }
+  if (!readingAnswered) return;
+  if (readingIndex === readingQuestions.length - 1){
+    readingFinished = true;
+  } else {
+    readingIndex++;
+  }
+  readingAnswered = false;
+  renderReadingQuestion();
+});
+readingUnit.addEventListener('change', () => setTopic(readingUnit.value));
+readingLevel.addEventListener('change', loadReading);
+
+function syncUnitSelects(unitId){
+  studyUnit.value = unitId;
+  readingUnit.value = unitId;
+  originalSetTopic(unitId);
+  startCards();
+  startQuiz();
+  loadReading();
+  updateStudyProgress();
+}
+const originalSetTopic = setTopic;
+setTopic = function(id){
+  syncUnitSelects(id);
+};
+studyUnit.addEventListener('change', () => setTopic(studyUnit.value));
+
+startCards();
+startQuiz();
+loadReading();
+updateStudyProgress();
+
+// Khởi chạy khi tải trang
+setTopic(current);
+</script>
+</body>
+</html>
