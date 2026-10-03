@@ -209,11 +209,8 @@ section .lede {
 
 .wrap {
   overflow-x: auto;
-  border: 2px solid rgba(255,255,255,0.9);
-  border-radius: 24px;
-  background: var(--surface);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 15px 35px rgba(255, 182, 193, 0.15); 
+  border: 0;
+  background: transparent;
 }
 table { border-collapse: collapse; width: 100%; min-width: 1180px; font-size: .95rem; }
 thead th { 
@@ -224,12 +221,13 @@ thead th {
   z-index: 2; font-size: 1rem;
 }
 tbody td { padding: 14px 18px; vertical-align: top; border-bottom: 1px dashed var(--line); transition: background 0.2s ease; }
+tbody tr { background: var(--surface); }
 tbody tr:last-child td { border-bottom: 0; }
 tbody tr:hover td { background: var(--surface-2); }
 
 td.w { 
   position: sticky; left: 0; 
-  background: rgba(255, 255, 255, 0.95); 
+  background: transparent; 
   min-width: 140px; max-width: 200px; 
   border-right: 2px dashed rgba(255, 182, 193, 0.4); 
   z-index: 1;
@@ -257,7 +255,7 @@ td b { font-weight: 800; color: var(--ink); }
 
 td.ex { 
   font-style: italic; color: #5a5a5a; font-weight: 600; 
-  background: rgba(255, 250, 250, 0.7); 
+  background: transparent; 
   padding: 10px 14px; border-radius: 12px; 
   display: inline-block; width: 100%; box-sizing: border-box;
   border-left: 3px solid var(--focus);
@@ -300,14 +298,13 @@ th.c-n, td.c-n { min-width: 250px; }
 }
 .view-panel[hidden], .activity-panel[hidden] { display: none !important; }
 .study-view {
-  max-width: 1360px;
+  max-width: 1120px;
   margin: 20px auto 60px;
   padding: 24px;
-  background: var(--surface);
-  backdrop-filter: blur(16px);
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(255, 182, 193, 0.15);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 .study-controls, .activity-heading, .activity-actions, .writing-footer {
   display: flex;
@@ -328,7 +325,7 @@ th.c-n, td.c-n { min-width: 250px; }
   border: 2px solid var(--line);
   border-radius: 12px;
 }
-.study-progress { margin-left: auto; color: var(--muted); font-weight: 700; }
+.study-progress { margin-left: auto; padding: 6px 10px; color: var(--muted); font-weight: 700; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
 .mode-tabs, .difficulty-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
 .mode-tabs { margin-bottom: 20px; border-bottom: 1px solid var(--line); }
 .mode-tabs button, .difficulty-tabs button {
@@ -400,12 +397,13 @@ th.c-n, td.c-n { min-width: 250px; }
 .quiz-options button.incorrect { border-color: #e17680; background: rgba(255, 154, 158, 0.25); }
 .quiz-feedback { min-height: 1.6em; font-weight: 800; }
 .reading-article {
-  max-width: 980px;
+  width: fit-content;
+  max-width: 100%;
   margin: 0 auto 28px;
-  padding: 24px 30px;
-  background: rgba(255, 255, 255, 0.78);
-  border-left: 6px solid var(--c-change);
-  border-radius: 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border-left: 5px solid var(--c-change);
+  border-radius: 10px;
 }
 .reading-kicker { color: var(--focus-hover); font-size: .88rem; font-weight: 800; text-transform: uppercase; }
 .reading-article h2 { margin: 4px 0; font-family: var(--font-head); font-size: 1.6rem; color: var(--ink); }
@@ -413,7 +411,7 @@ th.c-n, td.c-n { min-width: 250px; }
 .reading-passage { max-width: 78ch; font-size: 1.04rem; line-height: 1.8; }
 .reading-passage p { margin: 0 0 14px; }
 .reading-passage p:last-child { margin-bottom: 0; }
-.reading-quiz { padding-top: 20px; border-top: 1px solid var(--line); }
+.reading-quiz { width: min(100%, 940px); margin: 0 auto; padding: 16px 20px; background: #fff; border: 1px solid var(--line); border-radius: 10px; }
 
 @media (max-width:900px){
   header.top { margin: 10px; padding: 12px 14px; flex-wrap: wrap; }
@@ -432,10 +430,10 @@ th.c-n, td.c-n { min-width: 250px; }
   table, thead, tbody, tr, td { display: block; min-width: 0; width: 100%; }
   thead { display: none; }
   tbody tr { 
-    background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); 
+    background: var(--surface); 
     border: 2px solid rgba(255, 255, 255, 0.9); border-left: 8px solid var(--c); 
     border-radius: 24px; margin-bottom: 20px; padding: 12px 0; 
-    box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2); 
+    box-shadow: none; 
   }
   tbody td { border: 0; padding: 10px 20px; min-width: 0!important; max-width: none!important; }
   td.w { position: static; border: 0; background: transparent; padding-bottom: 0;}
